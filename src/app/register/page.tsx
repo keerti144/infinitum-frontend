@@ -10,7 +10,7 @@ export default function RegisterPage() {
     name: '',
     rollNo: '',
     department: '',
-    year: 1,
+    year: '1', // Change to string
     phnNo: '',
     password: '',
     source: '', // New field for "How did you hear about us?"
