@@ -2,30 +2,43 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { signIn } from "next-auth/react";
 import "@/app/login/animations.css";
 
 export default function LoginPage() {
-  const [rollNumber, setRollNumber] = useState("");
-  const [password, setPassword] = useState("");
+  const handleGoogleLogin = async () => {
+    try {
+        const response = await fetch("${BACKEND_URL}/api/auth/google"); 
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Roll Number:", rollNumber, "Password:", password);
-  };
+        const data = await response.json();
+
+        if (data.authUrl) {
+            window.location.href = data.authUrl; // Redirect user to Google OAuth
+        } else {
+            console.error("Failed to get auth URL:", data.message);
+        }
+    } catch (error:unknown) {
+        if (error instanceof Error) {
+          console.error("Google Sign-in Error:", error.message);
+      } else {
+          console.error("Google Sign-in Error:", error);
+      }
+    }
+  };
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Animated Background */}
       <div className="background-container">
-        {[...Array(25)].map((_, i) => (
-          <div key={i} className="dot"
-          style={{
-            top: `${Math.random() * 100}vh`,
-            left: `${Math.random() * 100}vw`,
-            animationDelay: `${Math.random() * 3}s`,
-          }}
+        {[...Array(30)].map((_, i) => (
+          <div
+            key={i}
+            className="dot"
+            style={{
+              top: `${Math.random() * 100}vh`,
+              left: `${Math.random() * 100}vw`,
+              animationDelay: `${Math.random() * 15}s`,
+            }}
           ></div>
         ))}
       </div>
@@ -34,36 +47,13 @@ export default function LoginPage() {
       <div className="relative z-10 bg-zinc-900 p-8 rounded-lg shadow-lg max-w-md w-full">
         <h1 className="text-3xl font-bold mb-6 text-white text-center">Login</h1>
 
-        <form onSubmit={handleLogin} className="space-y-4">
-          {/* Roll Number Field */}
-          <div>
-            <label className="text-gray-400 block mb-1">Roll Number</label>
-            <Input 
-              type="text" 
-              placeholder="Enter your roll number" 
-              value={rollNumber} 
-              onChange={(e) => setRollNumber(e.target.value)} 
-              className="w-full text-white bg-gray-800 border-gray-600 focus:border-pink-500 focus:ring-pink-500"
-              required
-            />
-          </div>
-
-          {/* Password Field */}
-          <div>
-            <label className="text-gray-400 block mb-1">Password</label>
-            <Input 
-              type="password" 
-              placeholder="Enter your password" 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
-              className="w-full text-white bg-gray-800 border-gray-600 focus:border-pink-500 focus:ring-pink-500"
-              required
-            />
-          </div>
-
-          {/* Submit Button */}
-          <Button type="submit" className="w-full bg-pink-600 hover:bg-pink-700">Login</Button>
-        </form>
+        {/* Google Sign-In Button */}
+        <Button
+          onClick={handleGoogleLogin}
+          className="w-full bg-pink-600 hover:bg-pink-700"
+        >
+          Sign in with Google
+        </Button>
 
         {/* Register Link */}
         <p className="text-gray-400 text-center mt-4">

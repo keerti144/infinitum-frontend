@@ -32,7 +32,7 @@
     border-radius: 50%;
     box-shadow: 0 0 15px #dc1464;
     opacity: 0.6;
-    animation: floatDots 8s infinite ease-in-out;
+    animation: floatDots 3s infinite ease-in-out;
   }
   
   /* Generate multiple dots at random positions */
