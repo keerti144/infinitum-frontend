@@ -59,7 +59,6 @@ export default function Gallery() {
                 />
               </div>
 
-              {/* White Background and Description on Hover */}
               <div className="absolute inset-0 bottom-0 flex flex-col justify-end bg-white p-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                 <h3 className="text-xl font-semibold text-black">{image.title}</h3>
                 <p className="text-sm text-black mt-2">{image.description}</p>
