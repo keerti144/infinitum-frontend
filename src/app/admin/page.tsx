@@ -17,7 +17,7 @@ const AdminDashboard = () => {
   const [attendance, setAttendance] = useState<{ [key: string]: boolean }>({});
 
 
-  const [token, setToken] = useState<string>("your_auth_token_here"); // Replace with actual token
+  const [token, setToken] = useState<string>("auth_token");
 
   const fetchStudents = async (eventId: string) => {
     try {
@@ -48,12 +48,11 @@ const AdminDashboard = () => {
   };
   const handleAttendanceChange = async (rollNo: string, eventId: string) => {
     try {
-      // Toggle attendance locally first
+      
       setAttendance((prev) => ({
         ...prev,
         [rollNo]: !prev[rollNo],
       }));
-      // Send attendance update to backend
       const response = await axios.put(
         "http://localhost:5000/attendance/update",
         { roll_no: rollNo, event_id: eventId },
