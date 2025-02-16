@@ -77,8 +77,7 @@ export default function Portfolio() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="container mx-auto"
       >
-        {/* Category Buttons */}
-        <div className="mb-8 flex flex-wrap justify-center gap-2 sm:gap-4">
+        <div className="mb-8 flex flex-wrap justify-center gap-4">
           {categories.map((category) => (
             <motion.div
               key={category}
@@ -87,11 +86,11 @@ export default function Portfolio() {
             >
               <Button
                 onClick={() => setSelectedCategory(category)}
-                className={`text-xs sm:text-sm md:text-base capitalize px-3 sm:px-4 py-2 transition-transform duration-300
+                className={`px-4 py-2 rounded-lg transition-all duration-300 shadow-lg
                   ${
                     selectedCategory === category
                       ? "bg-[#ff0074] text-white"
-                      : "bg-gray-200 text-black hover:bg-gray-400 hover:text-white"
+                      : "bg-gray-300 text-black hover:bg-gray-500 hover:text-white"
                   }
                 `}
               >
@@ -101,10 +100,9 @@ export default function Portfolio() {
           ))}
         </div>
 
-        {/* Portfolio Grid */}
         <motion.div
           layout
-          className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4"
+          className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
@@ -118,24 +116,24 @@ export default function Portfolio() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.1 }}
               >
                 <Card
-                  className="overflow-hidden bg-zinc-900 hover:scale-105 transition-transform duration-300 cursor-pointer w-full h-72 sm:h-80 md:h-96 relative"
+                  className="overflow-hidden bg-gray-900 rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-transform duration-300 cursor-pointer w-full h-80 relative"
                   onClick={() => router.push(`/event/${work.id}`)}
                 >
                   <CardContent className="p-0 flex flex-col items-center justify-center w-full h-full relative">
                     <motion.img
                       src={work.image}
                       alt={work.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover brightness-90 hover:brightness-100 transition duration-300"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ duration: 0.8 }}
                     />
-                    <div className="absolute bottom-0 w-full bg-black/60 p-3 sm:p-4 text-center">
+                    <div className="absolute bottom-0 w-full bg-gradient-to-t from-black/80 via-black/60 to-transparent p-4 text-center">
                       <motion.h3
-                        className="text-xs sm:text-sm md:text-lg font-semibold text-white"
+                        className="text-lg font-semibold text-white"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
@@ -143,7 +141,7 @@ export default function Portfolio() {
                         {work.title}
                       </motion.h3>
                       <motion.p
-                        className="mt-1 text-xs sm:text-sm text-gray-300"
+                        className="mt-1 text-sm text-gray-300"
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.4 }}
