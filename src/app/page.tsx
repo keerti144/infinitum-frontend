@@ -14,7 +14,7 @@ export default function Page() {
       <section id="portfolio">
         <Portfolio />
       </section>
-      <section id="hero-geometric">
+      <section id="Flagship">
         <HeroGeometric />
       </section>
       <section id="gallery">

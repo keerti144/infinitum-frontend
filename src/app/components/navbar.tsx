@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { X, Menu } from "lucide-react";
 import type React from "react"; // Added import for React
 import Image from "next/image";
+import styles from "./Navbar.module.css";
+
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -26,9 +28,9 @@ export default function Navbar() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const navItems: any[] = [
-    { href: "#gallery", label: "Gallery" },
-    { href: "#portfolio", label: "Portfolio" },
-    { href: "#contact", label: "Contact" },
+    { href: "/#gallery", label: "Gallery" },
+    { href: "/#Flagship", label: "Flagship" },
+    { href: "/#contact", label: "Contact" },
     { href: "/register", label: "Register" },
     { href: "/login", label: "Login" },
   ];
@@ -56,11 +58,18 @@ export default function Navbar() {
           </Link>
           <div className="hidden md:flex space-x-8">
             {navItems.slice(0, 3).map((item) => (
-              <NavLink key={item.href} href={item.href}>
+              <NavLink
+                key={item.href}
+                href={item.href}
+                className={
+                  item.label === "Flagship" ? styles.animateTextWave : ""
+                }
+              >
                 {item.label}
               </NavLink>
             ))}
           </div>
+
           <div className="hidden md:flex space-x-4">
             <Button asChild variant="outline">
               <Link href="/register">Register</Link>
@@ -92,21 +101,27 @@ export default function Navbar() {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            {/* <div className="container mx-auto px-4 py-8">
-                            {navItems.map((item) => (
-                                <motion.div
-                                    key={item.href}
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: 10 }}
-                                    transition={{ duration: 0.2 }}
-                                >
-                                    <NavLink href={item.href} onClick={toggleMobileMenu} className="block py-4 text-2xl">
-                                        {item.label}
-                                    </NavLink>
-                                </motion.div>
-                            ))}
-                        </div> */}
+            <motion.div className="container mx-auto px-4 py-8">
+              {navItems.map((item) => (
+                <motion.div
+                  key={item.href}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <NavLink
+                    href={item.href}
+                    onClick={toggleMobileMenu}
+                    className={
+                      item.label === "Flagship" ? styles.animateTextWave : ""
+                    }
+                  >
+                    {item.label}
+                  </NavLink>
+                </motion.div>
+              ))}
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -117,8 +132,8 @@ export default function Navbar() {
 function NavLink({
   href,
   children,
-  className = "",
   onClick,
+  className = "",
 }: {
   href: string;
   children: React.ReactNode;
@@ -128,7 +143,7 @@ function NavLink({
   return (
     <Link
       href={href}
-      className={`text-gray-300 hover:text-white transition-colors ${className}`}
+      className={`text-gray-300 transition-colors duration-300 ${className}`}
       onClick={onClick}
     >
       {children}
