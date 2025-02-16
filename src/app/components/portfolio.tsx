@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,14 +11,53 @@ export default function Portfolio() {
 
   const categories = ["All", "GHCC", "The Eye", "CSEA"];
 
-  const works = [
-    { id: 1, title: "Event 1", category: "GHCC", image: "/e1.jpg", year: "2025" },
-    { id: 2, title: "Event 2", category: "GHCC", image: "/e2.jpg", year: "2025" },
-    { id: 3, title: "Event 3", category: "The Eye", image: "/e3.jpg", year: "2025" },
-    { id: 4, title: "Event 4", category: "The Eye", image: "/e4.jpg", year: "2025" },
-    { id: 5, title: "Event 5", category: "CSEA", image: "/e5.jpg", year: "2025" },
-    { id: 6, title: "Event 6", category: "CSEA", image: "/e6.jpg", year: "2025" },
-  ];
+  const works = useMemo(
+    () => [
+      {
+        id: 1,
+        title: "Event 1",
+        category: "GHCC",
+        image: "/e1.jpg",
+        year: "2025",
+      },
+      {
+        id: 2,
+        title: "Event 2",
+        category: "GHCC",
+        image: "/e2.jpg",
+        year: "2025",
+      },
+      {
+        id: 3,
+        title: "Event 3",
+        category: "The Eye",
+        image: "/e3.jpg",
+        year: "2025",
+      },
+      {
+        id: 4,
+        title: "Event 4",
+        category: "The Eye",
+        image: "/e4.jpg",
+        year: "2025",
+      },
+      {
+        id: 5,
+        title: "Event 5",
+        category: "CSEA",
+        image: "/e5.jpg",
+        year: "2025",
+      },
+      {
+        id: 6,
+        title: "Event 6",
+        category: "CSEA",
+        image: "/e6.jpg",
+        year: "2025",
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
     works.forEach((work) => {
@@ -41,7 +80,11 @@ export default function Portfolio() {
         {/* Category Buttons */}
         <div className="mb-8 flex flex-wrap justify-center gap-2 sm:gap-4">
           {categories.map((category) => (
-            <motion.div key={category} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+            <motion.div
+              key={category}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
               <Button
                 onClick={() => setSelectedCategory(category)}
                 className={`text-xs sm:text-sm md:text-base capitalize px-3 sm:px-4 py-2 transition-transform duration-300

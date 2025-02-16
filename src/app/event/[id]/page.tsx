@@ -1,20 +1,62 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useRouter, useParams } from "next/navigation"; // Import useParams
+import { useParams } from "next/navigation"; // Import useParams
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 const events = [
-  { id: "1", title: "Event 1", image: "/e1.jpg", description: "----Event Description----", date: "March 6, 2025", location: "XYZ Auditorium" },
-  { id: "2", title: "Event 2", image: "/e2.jpg", description: "----Event Description----", date: "March 7, 2025", location: "ABC Hall" },
-  { id: "3", title: "Event 3", image: "/e3.jpg", description: "----Event Description----", date: "March 6, 2025", location: "DEF Center" },
-  { id: "4", title: "Event 4", image: "/e4.jpg", description: "----Event Description----", date: "March 7, 2025", location: "DEF Center" },
-  { id: "5", title: "Event 5", image: "/e5.jpg", description: "----Event Description----", date: "March 6, 2025", location: "DEF Center" },
-  { id: "6", title: "Event 6", image: "/e6.jpg", description: "----Event Description----", date: "March 7, 2025", location: "DEF Center" },
+  {
+    id: "1",
+    title: "Event 1",
+    image: "/e1.jpg",
+    description: "----Event Description----",
+    date: "March 6, 2025",
+    location: "XYZ Auditorium",
+  },
+  {
+    id: "2",
+    title: "Event 2",
+    image: "/e2.jpg",
+    description: "----Event Description----",
+    date: "March 7, 2025",
+    location: "ABC Hall",
+  },
+  {
+    id: "3",
+    title: "Event 3",
+    image: "/e3.jpg",
+    description: "----Event Description----",
+    date: "March 6, 2025",
+    location: "DEF Center",
+  },
+  {
+    id: "4",
+    title: "Event 4",
+    image: "/e4.jpg",
+    description: "----Event Description----",
+    date: "March 7, 2025",
+    location: "DEF Center",
+  },
+  {
+    id: "5",
+    title: "Event 5",
+    image: "/e5.jpg",
+    description: "----Event Description----",
+    date: "March 6, 2025",
+    location: "DEF Center",
+  },
+  {
+    id: "6",
+    title: "Event 6",
+    image: "/e6.jpg",
+    description: "----Event Description----",
+    date: "March 7, 2025",
+    location: "DEF Center",
+  },
 ];
 
 export default function EventPage() {
-  const router = useRouter();
   const { id } = useParams(); // Use useParams to get the event ID
   const [loading, setLoading] = useState(true);
 
@@ -63,8 +105,13 @@ export default function EventPage() {
         transition={{ duration: 0.5 }}
         className="relative z-10 p-8 bg-zinc-900 rounded-xl shadow-lg text-center max-w-lg"
       >
-        {/* Event Image */}
-        <img src={event.image} alt={event.title} className="w-full h-60 object-cover rounded-lg mb-6" />
+        <Image
+          src={event.image}
+          alt={event.title}
+          width={600}
+          height={240}
+          className="w-full h-60 object-cover rounded-lg mb-6"
+        />
 
         <h1 className="text-4xl font-bold">{event.title}</h1>
         <p className="mt-4 text-lg text-gray-300">{event.description}</p>

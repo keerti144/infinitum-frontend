@@ -1,25 +1,25 @@
-"use client"
-import { useState, useEffect } from 'react'
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import FormField from "./FormField"
-import './animation.css'
+"use client";
+import { useState } from "react";
+import FormField from "./FormField";
+import "./animation.css";
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
-    name: '',
-    rollNo: '',
-    department: '',
-    year: '1',
-    phnNo: '',
-    source: '',
+    name: "",
+    rollNo: "",
+    department: "",
+    year: "1",
+    phnNo: "",
+    source: "",
   });
 
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   // Handle form changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -31,34 +31,39 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setMessage('');
+    setMessage("");
 
     try {
       // Replace the URL with backend endpoint
-      const response = await fetch('https://your-backend-endpoint.com/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          rollNo: formData.rollNo,
-          department: formData.department,
-          year: formData.year,
-          phnNo: formData.phnNo,
-          source: formData.source,
-        }),
-      });
+      const response = await fetch(
+        "https://infinitum-website.onrender.com/api/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            roll_no: formData.rollNo,
+            department: formData.department,
+            year: formData.year,
+            phn_no: formData.phnNo,
+            source: formData.source,
+          }),
+        }
+      );
 
       const result = await response.json();
 
       if (response.ok) {
-        setMessage('Registration successful! Please login.');
+        setMessage("Registration successful! Please login.");
       } else {
-        setMessage(`Error: ${result.message || 'Something went wrong'}`);
+        console.log(result);
+        setMessage(`Error: ${result.message || "Something went wrong"}`);
       }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      setMessage('Network error, please try again later.');
+      setMessage("Network error, please try again later.");
     } finally {
       setLoading(false);
     }
@@ -83,16 +88,32 @@ export default function RegisterPage() {
           </div>
         )}
 
-        <button
-          className="form-button w-full mt-4 px-6 py-3 rounded-md bg-gray-800 text-white text-lg font-semibold hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-700 transition duration-300 scale-100 hover:scale-105 flex items-center justify-center"
-        >
+        <button className="form-button w-full mt-4 px-6 py-3 rounded-md bg-gray-800 text-white text-lg font-semibold hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-700 transition duration-300 scale-100 hover:scale-105 flex items-center justify-center">
           Google Login
         </button>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
-          <FormField label="Full Name" name="name" value={formData.name} handleChange={handleChange} placeholder="Enter your full name" />
-          <FormField label="Roll Number" name="rollNo" value={formData.rollNo} handleChange={handleChange} placeholder="Enter your roll number" />
-          <FormField label="Department" name="department" value={formData.department} handleChange={handleChange} placeholder="Enter your department" />
+          <FormField
+            label="Full Name"
+            name="name"
+            value={formData.name}
+            handleChange={handleChange}
+            placeholder="Enter your full name"
+          />
+          <FormField
+            label="Roll Number"
+            name="rollNo"
+            value={formData.rollNo}
+            handleChange={handleChange}
+            placeholder="Enter your roll number"
+          />
+          <FormField
+            label="Department"
+            name="department"
+            value={formData.department}
+            handleChange={handleChange}
+            placeholder="Enter your department"
+          />
 
           <div className="flex flex-col">
             <label className="text-white mb-2">Year</label>
@@ -109,10 +130,20 @@ export default function RegisterPage() {
             </select>
           </div>
 
-          <FormField label="Phone Number" name="phnNo" value={formData.phnNo} handleChange={handleChange} placeholder="Enter your phone number" />
+          <FormField
+            label="Phone Number"
+            name="phnNo"
+            value={formData.phnNo}
+            handleChange={handleChange}
+            placeholder="Enter your phone number"
+          />
 
-          <div className="flex flex-col mb-6"> {/* Added margin-bottom to create space */}
-            <label className="text-white mb-2">How did you hear about us?</label>
+          <div className="flex flex-col mb-6">
+            {" "}
+            {/* Added margin-bottom to create space */}
+            <label className="text-white mb-2">
+              How did you hear about us?
+            </label>
             <select
               name="source"
               value={formData.source}
@@ -132,7 +163,7 @@ export default function RegisterPage() {
             className="form-button w-full mt-4 px-8 py-4 rounded-md bg-[#fc1464] text-white text-lg font-semibold hover:bg-[#f41d72] focus:outline-none focus:ring-4 focus:ring-[#fc1464] transition duration-300 scale-100 hover:scale-105"
             disabled={loading}
           >
-            {loading ? 'Registering...' : 'Register'}
+            {loading ? "Registering..." : "Register"}
           </button>
         </form>
       </div>

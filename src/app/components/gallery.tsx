@@ -1,19 +1,20 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { useRef, useState } from "react"
-import { useInView } from "framer-motion"
-import ReactCardFlip from "react-card-flip"
+import { motion } from "framer-motion";
+import { useRef, useState } from "react";
+import Image from "next/image";
+import { useInView } from "framer-motion";
+import ReactCardFlip from "react-card-flip";
 
 export default function Gallery() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true })
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
 
   const [flippedStates, setFlippedStates] = useState<boolean[]>([
     false,
     false,
     false,
-  ])
+  ]);
 
   const images = [
     {
@@ -37,13 +38,13 @@ export default function Gallery() {
       description:
         "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem velit, ea, dolore, maxime unde nulla perspiciatis repellendus aperiam excepturi labore est voluptates! Nesciunt cum placeat atque exercitationem perferendis eius quis!",
     },
-  ]
+  ];
 
   const handleFlip = (index: number) => {
-    const newFlippedStates = [...flippedStates]
-    newFlippedStates[index] = !newFlippedStates[index]
-    setFlippedStates(newFlippedStates)
-  }
+    const newFlippedStates = [...flippedStates];
+    newFlippedStates[index] = !newFlippedStates[index];
+    setFlippedStates(newFlippedStates);
+  };
 
   return (
     <section className="relative py-20">
@@ -76,10 +77,12 @@ export default function Gallery() {
                   transition: "box-shadow 0.3s ease",
                 }}
               >
-                <img
+                <Image
                   src={image.src}
                   alt={image.alt}
-                  className="w-full h-full object-cover rounded-lg"
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-lg"
                 />
               </div>
 
@@ -104,5 +107,5 @@ export default function Gallery() {
         </div>
       </div>
     </section>
-  )
+  );
 }
