@@ -37,7 +37,7 @@ const events = [
   },
   {
     id: "3",
-    title: "Family Fued",
+    title: "Family Feud",
     image: "/e3.jpg",
     description: "This event brings friends together for an engaging and interactive experience, fostering teamwork and strategic thinking. Participants will compete in teams, answering survey-based questions to identify the most popular responses. The game encourages collaboration, quick decision-making, and a spirit of friendly competition. The event aims to create a dynamic and enjoyable environment where participants can test their knowledge, interact meaningfully, and strengthen social bonds through structured gameplay.",
     date: "March 8, 2025",
@@ -51,7 +51,7 @@ const events = [
   },
   {
     id: "4",
-    title: "The Pandamic That Never Happened",
+    title: "The Pandemic That Never Happened",
     image: "/e4.jpg",
     description: "'The Pandemic That Never Happened' is an immersive cybersecurity and digital forensics event where participants must navigate through a fabricated global crisis, analyze digital evidence, and uncover the truth behind the misinformation campaign. The event will simulate a high-stakes investigative scenario in which teams will utilize forensic techniques, threat analysis, and cybersecurity skills to solve the mystery.",
     date: "March 7, 2025",

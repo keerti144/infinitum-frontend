@@ -37,7 +37,7 @@ export default function Portfolio() {
       },
       {
         id: 3,
-        title: "Family Fued",
+        title: "Family Feud",
         category: "GHCC",
         image: "/e3.jpg",
         date: "March 8, 2025",
