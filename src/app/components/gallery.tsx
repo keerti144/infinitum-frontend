@@ -1,19 +1,9 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { useRef, useState } from "react"
-import { useInView } from "framer-motion"
-import ReactCardFlip from "react-card-flip"
+import { useState } from "react"
 
 export default function Gallery() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true })
-
-  const [flippedStates, setFlippedStates] = useState<boolean[]>([
-    false,
-    false,
-    false,
-  ])
+  const [flippedStates, setFlippedStates] = useState<boolean[]>([false, false, false])
 
   const images = [
     {
@@ -47,62 +37,79 @@ export default function Gallery() {
 
   return (
     <section className="relative py-20">
-      <div ref={ref} className="container mx-auto px-4">
-        <motion.h2
-          className="mb-12 text-center text-4xl font-bold tracking-tighter sm:text-5xl text-gray-800"
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.8 }}
-          style={{
-            color: "inherit", // Retain default color
-          }}
-        >
+      <div className="container mx-auto px-4">
+        <h2 className="mb-12 text-center text-4xl font-bold tracking-tighter sm:text-5xl text-gray-800">
           Featured Works
-        </motion.h2>
+        </h2>
 
         <div className="flex flex-wrap justify-center gap-8">
           {images.map((image, index: number) => (
-            <ReactCardFlip
+            <div
               key={index}
-              isFlipped={flippedStates[index]}
-              flipDirection="horizontal"
+              className="flip-card w-96 h-96 cursor-pointer overflow-hidden rounded-lg shadow-lg"
+              onClick={() => handleFlip(index)}
             >
-              {/* Front Side */}
               <div
-                className="w-96 h-96 cursor-pointer overflow-hidden rounded-lg shadow-lg"
-                onClick={() => handleFlip(index)}
-                style={{
-                  boxShadow: "0 0 20px rgba(0, 255, 255, 0.3)",
-                  transition: "box-shadow 0.3s ease",
-                }}
+                className={`flip-card-inner ${flippedStates[index] ? "flipped" : ""}`}
               >
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-full object-cover rounded-lg"
-                />
-              </div>
+                {/* Front Side (Image) */}
+                <div className="flip-card-front">
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                </div>
 
-              {/* Back Side */}
-              <div
-                className="w-96 h-96 cursor-pointer rounded-lg shadow-lg bg-white text-gray-800 flex flex-col justify-center items-center p-6"
-                onClick={() => handleFlip(index)}
-                style={{
-                  boxShadow: "0 0 20px rgba(0, 255, 255, 0.3)",
-                  transition: "box-shadow 0.3s ease",
-                }}
-              >
-                <h3 className="text-2xl font-semibold text-black">
-                  {image.title}
-                </h3>
-                <p className="text-sm mt-2 text-center text-gray-800">
-                  {image.description}
-                </p>
+                {/* Back Side (Text) */}
+                <div className="flip-card-back flex flex-col justify-center items-center p-6">
+                  <h3 className="text-2xl font-semibold text-black">{image.title}</h3>
+                  <p className="text-sm mt-2 text-center text-gray-800">{image.description}</p>
+                </div>
               </div>
-            </ReactCardFlip>
+            </div>
           ))}
         </div>
       </div>
+
+      {/* CSS Styling */}
+      <style jsx>{`
+        .flip-card {
+          perspective: 1000px; /* Enables 3D space */
+        }
+
+        .flip-card-inner {
+          width: 100%;
+          height: 100%;
+          transition: transform 0.6s;
+          transform-style: preserve-3d; /* Ensure children are rendered in 3D */
+          position: relative;
+        }
+
+        .flip-card-inner.flipped {
+          transform: rotateY(180deg); /* Flipped state */
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+          backface-visibility: hidden;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .flip-card-front {
+          background-color: #fff;
+        }
+
+        .flip-card-back {
+          background-color: #fff;
+          transform: rotateY(180deg); /* Initially hide the back side */
+        }
+      `}</style>
     </section>
   )
 }
