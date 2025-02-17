@@ -75,19 +75,19 @@ export default function Gallery() {
       {/* CSS Styling */}
       <style jsx>{`
         .flip-card {
-          perspective: 1000px; /* Enables 3D space */
+          perspective: 1000px;
         }
 
         .flip-card-inner {
           width: 100%;
           height: 100%;
           transition: transform 0.6s;
-          transform-style: preserve-3d; /* Ensure children are rendered in 3D */
+          transform-style: preserve-3d; 
           position: relative;
         }
 
         .flip-card-inner.flipped {
-          transform: rotateY(180deg); /* Flipped state */
+          transform: rotateY(180deg); 
         }
 
         .flip-card-front,
@@ -107,7 +107,7 @@ export default function Gallery() {
 
         .flip-card-back {
           background-color: #fff;
-          transform: rotateY(180deg); /* Initially hide the back side */
+          transform: rotateY(180deg); 
         }
       `}</style>
     </section>
