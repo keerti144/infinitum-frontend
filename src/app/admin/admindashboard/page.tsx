@@ -1,4 +1,6 @@
 "use client";
+const url="https://infinitum-website.onrender.com";
+
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -11,49 +13,87 @@ interface Student {
   year:number
   event:string
 }
+interface AttendanceResponse {
+  [key: string]: boolean;
+}
 
 const AdminDashboard = () => {
   const router=useRouter();
   useEffect(()=>{
     
     const isAuthenticated=localStorage.getItem("isAdminLoggedIn");
-    console.log(isAuthenticated);
+    // console.log(isAuthenticated);
     if (!isAuthenticated) {
       router.replace("/admin");}
-  },[])
+  },[router])
+
   const [students, setStudents] = useState<Student[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<string>("");
-  const [attendance, setAttendance] = useState<{ [key: string]: boolean }>({});
+  const [attendance, setAttendance] = useState<AttendanceResponse>({});
+  const [token, setToken] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
-  const [token, setToken] = useState<string>(localStorage.getItem("auth_token") || "");
-  // const [token, setToken] = useState<string>("auth_token");
+  useEffect(() => {
+    const storedToken = localStorage.getItem("auth_token");
+    if (storedToken) {
+      setToken(storedToken);
+    } else {
+      console.error("Token not found in localStorage!");
+      router.replace("/admin"); // Redirect back to login if no token
+    }
+  }, [router]);
 
+  
   const fetchStudents = async (eventId: string) => {
+    if (!token) {
+      console.error("Token is missing. Cannot fetch students.");
+      return;
+    }
     try {
-      const response = await axios.get(
-        `http://localhost:5000/event/fetch/${eventId}`,
+      console.log("Current token:", token);
+      if (!token) {
+        console.error("Token is missing. Cannot fetch students.");
+        return;
+      }
+      const response = await axios.get<Student[]>(
+        `${url}/fetch/${eventId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      setStudents(response.data as Student[]);
-    } catch (error) {
+      if (response.data.length === 0) {
+        setError("No students found for this event.");
+        setStudents([]);
+      } else {
+        setStudents(response.data);
+        setError("");
+      }
+    } catch (error:any) {
       console.error("Error fetching students:", error);
     }
   };
   const fetchStudentEvents = async (query: string) => {
     if (!query) {setStudents([]);return;}
     try {
-      const response = await axios.get(
-        `http://localhost:5000/student/fetch/${query}`,
+          const response = await axios.get<Student[]>(
+        `${url}/registeredEvents/${query}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      setStudents(response.data as Student[]);
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error fetching student events:", error);
+      
+      if (response.data.length === 0) {
+        setError("No students found matching your query.");
+        setStudents([]);
+      } else {
+        setStudents(response.data);
+        setError("");
+      }
+      
+    } catch (error: any) {
+      console.error("Full error:", error);
+      console.error("Error response:", error.response?.data);
+      console.error("Error status:", error.response?.status);
     }
   };
   const handleAttendanceChange = async (rollNo: string, eventId: string) => {
@@ -64,7 +104,7 @@ const AdminDashboard = () => {
         [rollNo]: !prev[rollNo],
       }));
       const response = await axios.put(
-        "http://localhost:5000/attendance/update",
+        `${url}/attendance/update`,
         { roll_no: rollNo, event_id: eventId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -99,7 +139,7 @@ const AdminDashboard = () => {
             value={selectedEvent}
             >
             
-            <option value="1">CSEA</option>
+            <option value="1234">CSEA</option>
             <option value="2">EYE</option>
             <option value="3">GHCC</option>
             
