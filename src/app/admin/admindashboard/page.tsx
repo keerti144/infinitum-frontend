@@ -5,17 +5,17 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
-
 interface Student {
-  id: string;
-  name: string;
+  id:string;
+  name:string;
   department:string;
-  year:number
-  event:string
+  year:number;
+  event:string;
 }
 interface AttendanceResponse {
   [key: string]: boolean;
 }
+
 
 const AdminDashboard = () => {
   const router=useRouter();
@@ -72,8 +72,15 @@ const AdminDashboard = () => {
       console.error("Error fetching students:", error);
     }
   };
+
   const fetchStudentEvents = async (query: string) => {
-    if (!query) {setStudents([]);return;}
+    if (!token) return;
+
+    if (!query) {
+      setStudents([]);
+      return;
+    }
+
     try {
           const response = await axios.get<Student[]>(
         `${url}/registeredEvents/${query}`,
@@ -96,25 +103,26 @@ const AdminDashboard = () => {
       console.error("Error status:", error.response?.status);
     }
   };
+
   const handleAttendanceChange = async (rollNo: string, eventId: string) => {
+    if (!token) return;
+
     try {
-      
+      const updatedStatus = !attendance[rollNo];
+
       setAttendance((prev) => ({
         ...prev,
-        [rollNo]: !prev[rollNo],
+        [rollNo]: updatedStatus,
       }));
       const response = await axios.put(
         `${url}/attendance/update`,
         { roll_no: rollNo, event_id: eventId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
-      console.log("Attendance updated:", response.data);
     } catch (error) {
       console.error("Error updating attendance:", error);
     }
   };
-  
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selected = event.target.value;
@@ -127,14 +135,14 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className=" min-h-screen p-6 bg-[#1A1A2E] text-white">
-      <h1 className="text-2xl font-bold mt-14 ">Admin Dashboard</h1>
+    <div className="min-h-screen p-6 bg-[#1A1A2E] text-white">
+      <h1 className="text-2xl font-bold mt-14">Admin Dashboard</h1>
 
       <div className="flex justify-between items-center my-4 mt-10">
         <div>
-            <label className="mr-5 font-semibold ">Select Event:</label>
-            <select
-            className="border p-2 text-black bg-[#CCD6E0FC]"
+          <label className="mr-5 font-semibold">Select Event:</label>
+          <select
+            className="border p-2 text-black bg-[#CCD6E0FC] rounded"
             onChange={handleFilterChange}
             value={selectedEvent}
             >
@@ -142,19 +150,19 @@ const AdminDashboard = () => {
             <option value="1234">CSEA</option>
             <option value="2">EYE</option>
             <option value="3">GHCC</option>
-            
-            </select>
+          </select>
         </div>
+
         <div>
-    <label className="mr-5 font-semibold">Search:</label>
-    <input
-      type="text"
-      placeholder="Enter Roll No or Name"
-      className="border p-2 text-gray-800 bg-[#CCD6E0FC] placeholder-gray-500 focus:placeholder-gray-700 focus:text-black focus:cursor-black"
-      onChange={(e) => fetchStudentEvents(e.target.value)}
-    />
-  </div>
-</div>
+          <label className="mr-5 font-semibold">Search:</label>
+          <input
+            type="text"
+            placeholder="Enter Roll No or Name"
+            className="border p-2 text-gray-800 bg-[#CCD6E0FC] rounded placeholder-gray-500"
+            onChange={(e) => fetchStudentEvents(e.target.value)}
+          />
+        </div>
+      </div>
 
       <table className="w-full border-collapse border border-black mt-11">
         <thead>
@@ -175,7 +183,13 @@ const AdminDashboard = () => {
                 <td className="border p-2">{student.department}</td>
                 <td className="border p-2">{student.event}</td>
                 <td className="border p-2">
-                  <input type="checkbox" checked={attendance[student.id] || false} onChange={() => handleAttendanceChange(student.id, student.event)}/>
+                  <input
+                    type="checkbox"
+                    checked={attendance[student.id] || false}
+                    onChange={() =>
+                      handleAttendanceChange(student.id, student.event)
+                    }
+                  />
                 </td>
               </tr>
             ))

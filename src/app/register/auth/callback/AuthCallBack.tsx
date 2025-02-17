@@ -1,21 +1,16 @@
-"use client";
-
 import { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-
 const AuthCallback = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
+  const navigate = useNavigate();
+  const location = useLocation();
+  // Define expected response structure
   interface AuthResponse {
     token: string;
   }
-
   interface ErrorResponse {
     message?: string;
   }
-
   useEffect(() => {
     const exchangeTokenForSession = async (
       access_token: string,
@@ -30,20 +25,18 @@ const AuthCallback = () => {
             headers: { "Content-Type": "application/json" },
           }
         );
-
         localStorage.setItem("token", response.data.token);
-        router.push("/dashboard");
+        navigate("/dashboard");
       } catch (err: unknown) {
         if (typeof err === "object" && err !== null && "response" in err) {
           const errorResponse = (
             err as { response?: { status?: number; data?: unknown } }
           ).response;
-
           if (errorResponse?.status === 404) {
             const data = errorResponse.data as ErrorResponse;
             if (data?.message === "Student not found") {
               console.warn("Student not found, redirecting to register...");
-              router.push("/register");
+              navigate("/register");
               return;
             }
           }
@@ -55,22 +48,20 @@ const AuthCallback = () => {
         } else {
           console.error("An unknown error occurred.", err);
         }
-        router.push("/login");
+        navigate("/login");
       }
     };
 
-    const accessToken = searchParams.get("access_token");
-    const providerToken = searchParams.get("provider_token");
-
+    const hashParams = new URLSearchParams(location.hash.substring(1));
+    const accessToken = hashParams.get("access_token");
+    const providerToken = hashParams.get("provider_token");
     if (accessToken && providerToken) {
       exchangeTokenForSession(accessToken, providerToken);
     } else {
       console.error("Required tokens not found in URL");
-      router.push("/login");
+      navigate("/login");
     }
-  }, [router, searchParams]);
-
+  }, [location, navigate]);
   return <h2>Processing login...</h2>;
 };
-
 export default AuthCallback;
