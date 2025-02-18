@@ -1,39 +1,42 @@
-"use client"
+"use client";
 
-import { useState } from "react"
+import { useState } from "react";
+import Image from "next/image";
 
 export default function Gallery() {
-  const [flippedStates, setFlippedStates] = useState<boolean[]>([false, false, false])
-
   const images = [
     {
       src: "/csea.jpeg",
       alt: "Art piece 1",
       title: "CSEA",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem velit, ea, dolore, maxime unde nulla perspiciatis repellendus aperiam excepturi labore est voluptates! Nesciunt cum placeat atque exercitationem perferendis eius quis!",
+        "CSEA is a student-led tech community aimed at building a strong community of tech enthusiasts. We serve as a platform for students to explore various domains and enhance their skills",
     },
     {
       src: "/eye.jpeg",
       alt: "Art piece 2",
       title: "The Eye",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem velit, ea, dolore, maxime unde nulla perspiciatis repellendus aperiam excepturi labore est voluptates! Nesciunt cum placeat atque exercitationem perferendis eius quis!",
+        "The eye is a Cybersecurity-Focus Society under the CSEA. We aim in raising awareness about digital security, protect information systems, and foster a community of ethical hackers and cybersecurity enthusiasts!",
     },
     {
       src: "/github.jpeg",
       alt: "Art piece 3",
       title: "Github Campus Club",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem velit, ea, dolore, maxime unde nulla perspiciatis repellendus aperiam excepturi labore est voluptates! Nesciunt cum placeat atque exercitationem perferendis eius quis!",
+        "At Github we elevate student innovation one commit at a time through coding workshops, hackathons, and networking. It serves as a platform for beginners to learn, contribute, and collaborate on projects while building a tech community",
     },
-  ]
+  ];
+
+  const [flippedStates, setFlippedStates] = useState<boolean[]>(
+    new Array(images.length).fill(false)
+  );
 
   const handleFlip = (index: number) => {
-    const newFlippedStates = [...flippedStates]
-    newFlippedStates[index] = !newFlippedStates[index]
-    setFlippedStates(newFlippedStates)
-  }
+    const newFlippedStates = [...flippedStates];
+    newFlippedStates[index] = !newFlippedStates[index];
+    setFlippedStates(newFlippedStates);
+  };
 
   return (
     <section className="relative py-20">
@@ -43,28 +46,35 @@ export default function Gallery() {
         </h2>
 
         <div className="flex flex-wrap justify-center gap-8">
-          {images.map((image, index: number) => (
+          {images.map((image, index) => (
             <div
               key={index}
-              className="flip-card w-96 h-96 cursor-pointer overflow-hidden rounded-lg shadow-lg"
+              className="flip-card w-full sm:w-80 h-96 cursor-pointer overflow-hidden rounded-lg shadow-lg"
               onClick={() => handleFlip(index)}
             >
               <div
-                className={`flip-card-inner ${flippedStates[index] ? "flipped" : ""}`}
+                className={`flip-card-inner ${
+                  flippedStates[index] ? "flipped" : ""
+                }`}
               >
                 {/* Front Side (Image) */}
                 <div className="flip-card-front">
-                  <img
+                  <Image
                     src={image.src}
                     alt={image.alt}
-                    className="w-full h-full object-cover rounded-lg"
+                    fill
+                    className="object-cover rounded-lg"
                   />
                 </div>
 
                 {/* Back Side (Text) */}
                 <div className="flip-card-back flex flex-col justify-center items-center p-6">
-                  <h3 className="text-2xl font-semibold text-black">{image.title}</h3>
-                  <p className="text-sm mt-2 text-center text-gray-800">{image.description}</p>
+                  <h3 className="text-2xl font-semibold text-black">
+                    {image.title}
+                  </h3>
+                  <p className="text-sm mt-2 text-center text-gray-800">
+                    {image.description}
+                  </p>
                 </div>
               </div>
             </div>
@@ -82,12 +92,12 @@ export default function Gallery() {
           width: 100%;
           height: 100%;
           transition: transform 0.6s;
-          transform-style: preserve-3d; 
+          transform-style: preserve-3d;
           position: relative;
         }
 
         .flip-card-inner.flipped {
-          transform: rotateY(180deg); 
+          transform: rotateY(180deg);
         }
 
         .flip-card-front,
@@ -107,9 +117,9 @@ export default function Gallery() {
 
         .flip-card-back {
           background-color: #fff;
-          transform: rotateY(180deg); 
+          transform: rotateY(180deg);
         }
       `}</style>
     </section>
-  )
+  );
 }
