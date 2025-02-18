@@ -18,7 +18,7 @@ export default function RootLayout({
 
         <title>Infinitum</title>
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} no-scrollbar`}>
         <Suspense
           fallback={
             <div className="flex items-center justify-center h-screen">

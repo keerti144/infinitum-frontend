@@ -26,8 +26,7 @@ export default function Navbar() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const navItems: any[] = [
+  const navItems = [
     { href: "/#gallery", label: "Gallery" },
     { href: "/#Flagship", label: "Flagship" },
     { href: "/#contact", label: "Contact" },
@@ -37,8 +36,8 @@ export default function Navbar() {
 
   return (
     <motion.nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${
-        isScrolled ? "bg-black/80 backdrop-blur-md" : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 bg-black transition-colors duration-300 ${
+        isScrolled ? "bg-black/80 backdrop-blur-md" : "bg-black"
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -95,7 +94,7 @@ export default function Navbar() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-50 bg-black/95 pt-16"
+            className="fixed inset-0 z-50 bg-black pt-16"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
