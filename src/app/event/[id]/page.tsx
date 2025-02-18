@@ -11,15 +11,24 @@ const events = [
     id: "1",
     title: "Hackathon: Code for Change",
     image: "/e1.jpg",
-    description: "Join us for a 24-hour coding marathon where innovation meets social impact. Build solutions that address real-world challenges in healthcare, education, or environmental sustainability.",
+    description:
+      "Join us for a 24-hour coding marathon where innovation meets social impact. Build solutions that address real-world challenges in healthcare, education, or environmental sustainability.",
     date: "March 6, 2025",
     time: "9:00 AM - March 7, 9:00 AM",
     location: "PSG Tech Main Auditorium",
     teamSize: "2-4 members",
-    prizes: ["₹50,000 First Prize", "₹30,000 Second Prize", "₹20,000 Third Prize"],
-    prerequisites: ["Laptop with required software", "Student ID", "Basic coding knowledge"],
+    prizes: [
+      "₹50,000 First Prize",
+      "₹30,000 Second Prize",
+      "₹20,000 Third Prize",
+    ],
+    prerequisites: [
+      "Laptop with required software",
+      "Student ID",
+      "Basic coding knowledge",
+    ],
     registrationDeadline: "March 1, 2025",
-    status: "Upcoming"
+    status: "Upcoming",
   },
   {
     id: "2",
@@ -32,8 +41,9 @@ const events = [
     teamSize: "2-3 members",
     prizes: ["Winner : ₹2000", "Runner : ₹1000"],
     prerequisites: ["Basic Python knowledge", "Laptop", "Mathematics background"],
+
     registrationDeadline: "March 3, 2025",
-    status: "Upcoming"
+    status: "Upcoming",
   },
   {
     id: "3",
@@ -48,6 +58,7 @@ const events = [
     prerequisites: ["Basic networking knowledge"],
     registrationDeadline: "March 8, 2025",
     status: "Upcoming"
+
   },
   {
     id: "4",
@@ -59,11 +70,12 @@ const events = [
     location: "AIR Lab",
     teamSize: "2-4 members",
     prizes: ["Winner : ₹2000", "Runner : ₹1000"],
+
     prerequisites: ["JavaScript knowledge", "Laptop", "MetaMask wallet"],
     registrationDeadline: "March 4, 2025",
-    status: "Upcoming"
+    status: "Upcoming",
   },
- 
+
 ];
 
 export default function EventPage() {
