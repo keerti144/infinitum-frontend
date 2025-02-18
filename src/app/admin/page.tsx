@@ -1,7 +1,7 @@
 "use client";
-const url="https://infinitum-website.onrender.com";
+const url="https://infinitum-website.onrender.com"
 
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 interface LoginResponse {
@@ -25,7 +25,7 @@ const AdminLogin = () => {
       localStorage.setItem("isAdminLoggedIn", "true");
       localStorage.setItem("auth_token", token); 
       router.push("/admin/admindashboard"); 
-    } catch (err) {
+    } catch (error) {
       setError("Invalid username or password");
     }
   };
