@@ -49,7 +49,7 @@ const AuthCallback = () => {
             const data = errorResponse.data as ErrorResponse;
             if (data?.message === "Student not found") {
               console.warn("Student not found, redirecting to register...");
-              router.push("/register");
+              router.push("/register?showForm=true");
               return;
             }
           }
@@ -74,7 +74,11 @@ const AuthCallback = () => {
     }
   }, [router]);
 
-  return <h2>Processing login...</h2>;
+  return (
+    <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="text-white text-xl">Processing authentication...</div>
+    </div>
+  );
 };
 
 export default AuthCallback;
