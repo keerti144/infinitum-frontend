@@ -78,7 +78,7 @@ export default function Navbar() {
             </Button>
           </div>
           <Button
-            variant="ghost"
+            // variant="ghost"
             size="icon"
             className="md:hidden"
             onClick={toggleMobileMenu}
@@ -100,7 +100,7 @@ export default function Navbar() {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <motion.div className="container mx-auto px-4 py-8">
+            <motion.div className="container mx-auto px-4 py-8 ">
               {navItems.map((item) => (
                 <motion.div
                   key={item.href}
