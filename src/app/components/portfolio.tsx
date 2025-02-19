@@ -21,10 +21,10 @@ export default function Portfolio() {
         title: "Workshop: Ikigai in AI",
         category: "CSEA",
         image: "/e1.jpg",
-        date: "March 6, 2025",
-        location: "Main Auditorium",
-        teamSize: "2-4 members",
-        shortDescription: "24-hour coding marathon for social impact",
+        date: "March 7, 2025",
+        location: "AIR Lab / Hardware Lab",
+        teamSize: "Individual",
+        shortDescription: "Balancing Passion, Purpose, and Authenticity in Engineering",
       },
       {
         id: 2,
@@ -34,7 +34,7 @@ export default function Portfolio() {
         date: "March 8, 2025",
         location: "3AI Lab",
         teamSize: "2-3 members",
-        shortDescription: "Deep dive into AI with industry experts",
+        shortDescription: "A technical and non-technical event that combines AI tools with storytelling.",
       },
       {
         id: 3,
@@ -44,7 +44,7 @@ export default function Portfolio() {
         date: "March 8, 2025",
         location: "AIR Lab",
         teamSize: "4-6 members",
-        shortDescription: "Test your security skills in CTF",
+        shortDescription: "A team based trivia game fostering team work and quick thinking.",
       },
       {
         id: 4,
@@ -54,7 +54,7 @@ export default function Portfolio() {
         date: "March 7, 2025",
         location: "AIR Lab",
         teamSize: "2-4 members",
-        shortDescription: "Build your first DApp",
+        shortDescription: "A Cybersecurity and digital forensics challenge.",
       },
     
     ],
