@@ -83,15 +83,15 @@ function FaqInfinitum2025() {
         },
         {
             question: "What workshops are available?",
-            answer: "We have two key workshops: 'Building a RESTful API with Flask, MongoDB, and LLM Integration' and 'Machine Learning Workshop'. These provide hands-on experience in modern tech development.",
+            answer: "We offer a workshop on Ikigai in AI, which explores the intersection of artificial intelligence and human values. Participants will learn about ethical AI and its applications and how to navigate the AI landscape",
         },
         {
             question: "Are there non-technical events?",
-            answer: "Yes! Events like 'Family Feud', 'AI StoryQuest', and 'Manipulation Challenge & Musical Chairs' offer engaging experiences beyond coding.",
+            answer: "Yes! We have Family Feud and AI StoryQuest which offer engaging experiences beyond coding.",
         },
         {
             question: "How can I register?",
-            answer: "Registration details will be shared on the official INFINITUM 2025 website and CSEA announcements. Stay tuned for updates!",
+            answer: "You can register through this website by filling out the registration form.",
         },
     ];
 

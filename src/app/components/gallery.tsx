@@ -156,7 +156,7 @@ export default function Gallery() {
                   </ul>
                 </div>
 
-                <div className="space-y-2 text-sm text-gray-300">
+                {/* <div className="space-y-2 text-sm text-gray-300">
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4 text-[#fc1464]" />
                     <span>Next Event: {image.nextEvent}</span>
@@ -165,7 +165,7 @@ export default function Gallery() {
                     <MapPin className="w-4 h-4 text-[#fc1464]" />
                     <span>Venue: {image.venue}</span>
                   </div>
-                </div>
+                </div> */}
               </motion.div>
             </ReactCardFlip>
           ))}
