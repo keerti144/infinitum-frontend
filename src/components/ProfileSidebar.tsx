@@ -11,9 +11,9 @@ interface ProfileSidebarProps {
 
 interface RegisteredEvent {
   event_id: string;
-  event_name: string;
-  date: string;
-  time: string;
+  event: {
+    event_name: string;
+  };
 }
 
 export default function ProfileSidebar({ isOpen, onClose }: ProfileSidebarProps) {
@@ -112,11 +112,7 @@ export default function ProfileSidebar({ isOpen, onClose }: ProfileSidebarProps)
                       key={event.event_id}
                       className="bg-zinc-800 rounded-lg p-4 space-y-2"
                     >
-                      <h4 className="text-white font-medium">{event.event_name}</h4>
-                      <div className="text-sm text-gray-400">
-                        <p>Date: {event.date}</p>
-                        <p>Time: {event.time}</p>
-                      </div>
+                      <h4 className="text-white font-medium">{event.event.event_name}</h4>
                     </div>
                   ))}
                 </div>

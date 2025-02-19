@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -12,7 +12,10 @@ import {
   MapPin,
   ChevronDown,
   ChevronUp,
+  X,
 } from "lucide-react";
+import { useAuth } from "@/lib/AuthContext";
+import axios from "axios";
 
 const events = [
   {
@@ -54,7 +57,6 @@ const events = [
       "Laptop",
       "Mathematics background",
     ],
-
     registrationDeadline: "March 3, 2025",
     status: "Upcoming",
   },
@@ -63,7 +65,7 @@ const events = [
     title: "Family Feud",
     image: "/e3.jpg",
     description:
-      "This event brings friends together for an engaging and interactive experience, fostering teamwork and strategic thinking. Participants will compete in teams, answering survey-based questions to identify the most popular responses. The game encourages collaboration, quick decision-making, and a spirit of friendly competition. The event aims to create a dynamic and enjoyable environment where participants can test their knowledge, interact meaningfully, and strengthen social bonds through structured gameplay.",
+      "This event brings friends together for an engaging and interactive experience, fostering teamwork and strategic thinking. Participants will compete in teams, answering survey-based questions to identify the most popular responses. The game encourages collaboration, quick decision-making, and a spirit of friendly competition. The event aims to create a dynamic and enjoyable environment where participants can test their knowledge, interact meaningfully, and strengthen social bonds through structured gameplay.",
     date: "March 8, 2025",
     time: "9.30 AM - 12.00 PM",
     location: "AIR Lab",
@@ -78,24 +80,36 @@ const events = [
     title: "The Pandemic That Never Happened",
     image: "/e4.jpg",
     description:
-      "'The Pandemic That Never Happened' is an immersive cybersecurity and digital forensics event where participants must navigate through a fabricated global crisis, analyze digital evidence, and uncover the truth behind the misinformation campaign. The event will simulate a high-stakes investigative scenario in which teams will utilize forensic techniques, threat analysis, and cybersecurity skills to solve the mystery.",
+      "'The Pandemic That Never Happened' is an immersive cybersecurity and digital forensics event where participants must navigate through a fabricated global crisis, analyze digital evidence, and uncover the truth behind the misinformation campaign. The event will simulate a high-stakes investigative scenario in which teams will utilize forensic techniques, threat analysis, and cybersecurity skills to solve the mystery.",
     date: "March 7, 2025",
     time: "9:30 AM - 12:00 PM",
     location: "AIR Lab",
     teamSize: "2-4 members",
     prizes: ["Winner : ₹2000", "Runner : ₹1000"],
-
     prerequisites: ["JavaScript knowledge", "Laptop", "MetaMask wallet"],
     registrationDeadline: "March 4, 2025",
     status: "Upcoming",
   },
 ];
 
+interface RegisteredEvent {
+  event_id: string;
+  event: {
+    event_name: string;
+  };
+}
+
 export default function EventPage() {
   const { id } = useParams();
+  const router = useRouter();
+  const { isAuthenticated, userProfile } = useAuth();
   const [loading, setLoading] = useState(true);
   const [isRegistering, setIsRegistering] = useState(false);
   const [showFullDescription, setShowFullDescription] = useState(false);
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [registeredEvents, setRegisteredEvents] = useState<RegisteredEvent[]>([]);
+  const [isAlreadyRegistered, setIsAlreadyRegistered] = useState(false);
 
   const event = events.find((e) => e.id === id);
 
@@ -103,6 +117,68 @@ export default function EventPage() {
     const timer = setTimeout(() => setLoading(false), 500);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const fetchRegisteredEvents = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) return;
+
+        const response = await axios.get(
+          'https://infinitum-website.onrender.com/api/student/registeredEvents',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          }
+        );
+        setRegisteredEvents(response.data);
+        setIsAlreadyRegistered(response.data.some((e: RegisteredEvent) => e.event_id === id));
+      } catch (error) {
+        console.error('Error fetching registered events:', error);
+      }
+    };
+
+    if (isAuthenticated) {
+      fetchRegisteredEvents();
+    }
+  }, [isAuthenticated, id]);
+
+  const handleRegister = async () => {
+    if (!isAuthenticated) {
+      setShowLoginPrompt(true);
+      return;
+    }
+
+    setShowConfirmation(true);
+  };
+
+  const confirmRegistration = async () => {
+    setIsRegistering(true);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      const response = await axios.post(
+        `https://infinitum-website.onrender.com/api/event/register`,
+        {"event_id": id},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        setIsAlreadyRegistered(true);
+      }
+    } catch (error) {
+      console.error('Error registering for event:', error);
+    } finally {
+      setIsRegistering(false);
+      setShowConfirmation(false);
+    }
+  };
 
   if (loading || !event) {
     return (
@@ -112,14 +188,8 @@ export default function EventPage() {
     );
   }
 
-  const handleRegister = () => {
-    setIsRegistering(true);
-    // Add registration logic here
-    setTimeout(() => setIsRegistering(false), 1000);
-  };
-
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-start bg-gradient-to-b  text-white px-4 sm:px-6 pt-16 sm:pt-20 pb-8 sm:pb-12">
+    <div className="relative min-h-screen flex flex-col items-center justify-start bg-gradient-to-b text-white px-4 sm:px-6 pt-16 sm:pt-20 pb-8 sm:pb-12">
       {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(30)].map((_, i) => (
@@ -144,6 +214,88 @@ export default function EventPage() {
           />
         ))}
       </div>
+
+      {showLoginPrompt && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+          <div className="bg-zinc-900 p-6 rounded-lg max-w-sm w-full mx-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold">Login Required</h3>
+              <button
+                onClick={() => setShowLoginPrompt(false)}
+                className="p-1 hover:bg-zinc-800 rounded-full"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <p className="text-gray-300 mb-6">Please login to register for this event.</p>
+            <div className="space-y-4">
+              <Button
+                onClick={() => router.push('/login')}
+                className="w-full bg-[#fc1464] hover:bg-[#d1004f]"
+              >
+                Login
+              </Button>
+              <p className="text-center text-sm text-gray-400">
+                Don't have an account?{' '}
+                <button
+                  onClick={() => router.push('/register')}
+                  className="text-[#fc1464] hover:underline"
+                >
+                  Create one
+                </button>
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showConfirmation && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+          <div className="bg-zinc-900 p-6 rounded-lg max-w-md w-full mx-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold">Confirm Registration</h3>
+              <button
+                onClick={() => setShowConfirmation(false)}
+                className="p-1 hover:bg-zinc-800 rounded-full"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="space-y-4 mb-6">
+              <div>
+                <p className="text-gray-400">Event</p>
+                <p className="font-medium">{event.title}</p>
+              </div>
+              <div>
+                <p className="text-gray-400">Date & Time</p>
+                <p className="font-medium">{event.date}, {event.time}</p>
+              </div>
+              <div>
+                <p className="text-gray-400">Your Details</p>
+                <p className="font-medium">{userProfile?.name}</p>
+                <p className="text-sm text-gray-300">{userProfile?.roll_no}</p>
+                <p className="text-sm text-gray-300">{userProfile?.phn_no}</p>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <Button
+                onClick={() => setShowConfirmation(false)}
+                variant="outline"
+                className="w-full"
+              >
+                Back
+              </Button>
+              <Button
+                onClick={confirmRegistration}
+                className="w-full bg-[#fc1464] hover:bg-[#d1004f]"
+                disabled={isRegistering}
+              >
+                {isRegistering ? "Registering..." : "Confirm"}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Event Content */}
       <motion.div
@@ -320,10 +472,18 @@ export default function EventPage() {
               </p>
               <Button
                 onClick={handleRegister}
-                disabled={isRegistering}
-                className="w-full bg-[#fc1464] hover:bg-[#d1004f] text-white font-semibold py-3 rounded-lg transition-all duration-300 transform hover:scale-105 text-sm sm:text-base shadow-lg"
+                disabled={isRegistering || isAlreadyRegistered}
+                className={`w-full font-semibold py-3 rounded-lg transition-all duration-300 transform hover:scale-105 text-sm sm:text-base shadow-lg ${
+                  isAlreadyRegistered
+                    ? "bg-gray-600 hover:bg-gray-600 cursor-not-allowed"
+                    : "bg-[#fc1464] hover:bg-[#d1004f] text-white"
+                }`}
               >
-                {isRegistering ? "Processing..." : "Register Now"}
+                {isRegistering
+                  ? "Processing..."
+                  : isAlreadyRegistered
+                  ? "Already Registered"
+                  : "Register Now"}
               </Button>
             </motion.div>
           </div>
