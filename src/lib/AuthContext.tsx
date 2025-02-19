@@ -8,6 +8,7 @@ interface AuthContextType {
   userProfile: any | null;
   logout: () => Promise<void>;
   fetchProfile: () => Promise<void>;
+  setAuthState: (token: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -25,6 +26,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       fetchProfile();
     }
   }, []);
+
+  const setAuthState = async (newToken: string) => {
+    localStorage.setItem('token', newToken);
+    setToken(newToken);
+    setIsAuthenticated(true);
+    await fetchProfile();
+  };
 
   const fetchProfile = async () => {
     try {
@@ -58,7 +66,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, token, userProfile, logout, fetchProfile }}>
+    <AuthContext.Provider value={{ 
+      isAuthenticated, 
+      token, 
+      userProfile, 
+      logout, 
+      fetchProfile,
+      setAuthState 
+    }}>
       {children}
     </AuthContext.Provider>
   );

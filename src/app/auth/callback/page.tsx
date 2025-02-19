@@ -26,6 +26,26 @@ const AuthCallback = () => {
       return null;
     };
 
+    const getUserEmailAndName = async (accessToken: string) => {
+      try {
+          const response = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+              headers: { Authorization: `Bearer ${accessToken}` },
+          });
+  
+          if (!response.ok) {
+              throw new Error("Failed to fetch user info");
+          }
+  
+          const { email, name } = await response.json(); // Extract only email & name
+          console.log("Email:", email);
+          console.log("Name:", name);
+          localStorage.setItem("roll_no",email.split('@')[0].toUppercase());
+          localStorage.setItem("name",name);
+      } catch (error) {
+          console.error("Error fetching user info:", error);
+      }
+  };
+
     const exchangeTokenForSession = async (access_token: string) => {
       try {
         const response = await axios.post<AuthResponse>(
@@ -49,6 +69,7 @@ const AuthCallback = () => {
             const data = errorResponse.data as ErrorResponse;
             if (data?.message === "Student not found") {
               console.warn("Student not found, redirecting to register...");
+              await getUserEmailAndName(access_token);
               router.push("/register?showForm=true");
               return;
             }
@@ -74,11 +95,7 @@ const AuthCallback = () => {
     }
   }, [router]);
 
-  return (
-    <div className="min-h-screen bg-black flex items-center justify-center">
-      <div className="text-white text-xl">Processing authentication...</div>
-    </div>
-  );
+  return <h2>Processing login...</h2>;
 };
 
 export default AuthCallback;

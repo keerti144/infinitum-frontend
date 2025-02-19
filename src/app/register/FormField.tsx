@@ -9,6 +9,7 @@ interface FormFieldProps {
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
   placeholder: string;
   type?: string; // Make type optional
+  required?: boolean;
 }
 
 const FormField: React.FC<FormFieldProps> = ({ label, name, value, handleChange, placeholder, type = 'text' }) => {
