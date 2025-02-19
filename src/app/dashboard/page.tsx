@@ -17,47 +17,76 @@ interface Event {
   startTime: string;
   endTime: string;
   id: string;
+  offset?: number;
 }
 
 const events: Event[] = [
   {
     id: "1",
-    date: "2024-09-14",
-    name: "Git and GitHub",
-    startTime: "14:00",
-    endTime: "17:00",
+    date: "2025-03-07",
+    name: "Inauguration and Hackathon Briefing",
+    startTime: "09:00",
+    endTime: "10:00",
   },
   {
     id: "2",
-    date: "2024-09-20",
-    name: "EtherX: DevSecOps",
-    startTime: "16:00",
-    endTime: "19:00",
+    date: "2025-03-07",
+    name: "Nexus: Hackathon - Session 1",
+    startTime: "09:30",
+    endTime: "16:30",
+    offset: 1,
   },
   {
     id: "3",
-    date: "2024-09-21",
-    name: "EtherX: Capture the Flag",
-    startTime: "17:00",
-    endTime: "18:00",
+    date: "2025-03-07",
+    name: "The Pandemic That Never Happened - Cybersecurity Tech Event",
+    startTime: "09:30",
+    endTime: "12:00",
+    offset: 4,
   },
   {
     id: "4",
-    date: "2024-09-21",
-    name: "EtherX: OSINT",
-    startTime: "13:00",
-    endTime: "19:00",
+    date: "2025-03-07",
+    name: "Workshop: Ikigai in AI - Balancing Passion, Purpose, and Authenticity in Engineering",
+    startTime: "13:30",
+    endTime: "15:30",
   },
   {
     id: "5",
-    date: "2024-09-22",
-    name: "EtherX: Hackathon Essentials",
-    startTime: "15:00",
-    endTime: "18:00",
+    date: "2025-03-08",
+    name: "Family Feud",
+    startTime: "09:30",
+    endTime: "12:00",
+  },
+  {
+    id: "6",
+    date: "2025-03-08",
+    name: "Nexus: Hackathon Final Presentation",
+    startTime: "10:00",
+    endTime: "13:00",
+  },
+  {
+    id: "7",
+    date: "2025-03-08",
+    name: "AI Story Quest",
+    startTime: "13:30",
+    endTime: "15:30",
+  },
+  {
+    id: "8",
+    date: "2025-03-08",
+    name: "Valedictory",
+    startTime: "15:45",
+    endTime: "16:30",
   },
 ];
 
+
 const timeSlots = Array.from({ length: 11 }, (_, i) => `${i + 11}:00`);
+
+const timeSlots1 = Array.from({ length: 10 }, (_, i) => `${i + 9}:00`);
+const timeSlots2 = Array.from({ length: 10 }, (_, i) => `${i + 9}:00`);
+
 
 export default function ScheduleDisplay() {
   const [selectedEvents, setSelectedEvents] = useState<Set<string>>(new Set());
@@ -124,7 +153,7 @@ export default function ScheduleDisplay() {
             <div className="min-w-[1000px]">
               <div className="grid grid-cols-[200px_repeat(11,1fr)] bg-pink-600/10 border-b border-pink-600">
                 <div className="p-4 text-pink-500 font-bold">Event</div>
-                {timeSlots.map((time) => (
+                {timeSlots1.map((time) => (
                   <div
                     key={time}
                     className="p-4 text-pink-500 font-bold text-center"
@@ -144,7 +173,7 @@ export default function ScheduleDisplay() {
                     className="grid grid-cols-[200px_repeat(11,1fr)] border-b border-gray-800 relative"
                   >
                     <div className="p-4">{event.name}</div>
-                    {timeSlots.map((time) => (
+                    {timeSlots1.map((time) => (
                       <div
                         key={time}
                         className="p-4 border-l border-gray-800"
@@ -155,23 +184,23 @@ export default function ScheduleDisplay() {
                       animate={{ scaleX: 1 }}
                       transition={{ duration: 0.3 }}
                       className={`absolute left-[200px] h-full ${
-                        selectedEvents.has(event.id)
-                          ? "bg-pink-600/25"
-                          : "bg-gray-700/25"
+                      selectedEvents.has(event.id)
+                        ? "bg-pink-600/25"
+                        : "bg-gray-700/25"
                       }`}
-                      style={{
-                        left: `calc(200px + ${
-                          (Number.parseInt(event.startTime) - 11) * (100 / 11)
-                        }%)`,
-                        width: `${
-                          ((Number.parseInt(event.endTime) -
-                            Number.parseInt(event.startTime)) *
-                            100) /
-                          11
-                        }%`,
-                        transformOrigin: "left",
-                      }}
-                    >
+                      style={({
+                      left: `calc(200px + ${
+                        (Number.parseInt(event.startTime) - 9 + Number.parseInt(event.startTime.split(":")[1])/85) * (100 / 10)
+                      }% `,
+                      width: `${
+                        (((Number.parseInt(event.endTime) -
+                        Number.parseInt(event.startTime)) *
+                        100) /
+                        13) - (event.offset ?? 0) 
+                      }%`,
+                      transformOrigin: "left",
+                      })}
+                    > 
                       <div className="p-2 truncate">{event.name}</div>
                     </motion.div>
                   </motion.div>
