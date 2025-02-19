@@ -4,7 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import Image from "next/image";
 import ReactCardFlip from "react-card-flip";
-import { Trophy, Calendar, MapPin } from "lucide-react";
+import { Trophy } from "lucide-react";
 
 export default function Gallery() {
   const ref = useRef(null);
