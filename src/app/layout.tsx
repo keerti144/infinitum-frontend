@@ -2,8 +2,8 @@ import "@/styles/globals.css";
 import { Inter } from "next/font/google";
 import type React from "react";
 import { Suspense } from "react";
-import Navbar from "./components/navbar";
 import { AuthProvider } from "@/lib/AuthContext";
+// import Navbar from "./components/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,7 +28,7 @@ export default function RootLayout({
               </div>
             }
           >
-            <Navbar />
+            {/* <Navbar /> */}
             {children}
           </Suspense>
         </AuthProvider>

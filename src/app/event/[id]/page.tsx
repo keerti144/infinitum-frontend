@@ -14,6 +14,7 @@ import {
   ChevronUp,
   X,
 } from "lucide-react";
+import Navbar from "@/app/components/navbar";
 import { useAuth } from "@/lib/AuthContext";
 import axios from "axios";
 
@@ -199,6 +200,7 @@ export default function EventPage() {
 
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-start bg-gradient-to-b text-white px-4 sm:px-6 pt-16 sm:pt-20 pb-8 sm:pb-12">
+      <Navbar />
       {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(30)].map((_, i) => (
