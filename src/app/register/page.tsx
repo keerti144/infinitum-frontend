@@ -79,6 +79,13 @@ export default function RegisterPage() {
     setLoading(true);
     setMessage("");
 
+    // Check for required fields
+    if (!formData.name || !formData.rollNo || !formData.department || !formData.year || !formData.phnNo) {
+      setMessage("Please fill in all required fields.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const response = await fetch(
         "https://infinitum-website.onrender.com/api/auth/register",
@@ -180,7 +187,7 @@ export default function RegisterPage() {
         ) : (
           <form className="space-y-4 overflow-y-auto max-h-[60vh]" onSubmit={handleSubmit}>
             <FormField
-              label="Full Name"
+              label="Full Name *"
               name="name"
               value={formData.name}
               handleChange={handleChange}
@@ -188,7 +195,7 @@ export default function RegisterPage() {
               required
             />
             <FormField
-              label="Roll Number"
+              label="Roll Number *"
               name="rollNo"
               value={formData.rollNo}
               handleChange={handleChange}
@@ -196,7 +203,7 @@ export default function RegisterPage() {
               required
             />
             <FormField
-              label="Department"
+              label="Department *"
               name="department"
               value={formData.department}
               handleChange={handleChange}
@@ -205,7 +212,7 @@ export default function RegisterPage() {
             />
 
             <div className="flex flex-col">
-              <label className="text-white mb-2">Year</label>
+              <label className="text-white mb-2">Year *</label>
               <select
                 name="year"
                 value={formData.year}
@@ -221,7 +228,7 @@ export default function RegisterPage() {
             </div>
 
             <FormField
-              label="Phone Number"
+              label="Phone Number *"
               name="phnNo"
               value={formData.phnNo}
               handleChange={handleChange}
