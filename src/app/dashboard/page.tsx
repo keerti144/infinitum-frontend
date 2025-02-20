@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { motion, AnimatePresence } from "framer-motion";
+import Navbar from "../components/navbar";
 
 interface Event {
   date: string;
@@ -103,6 +104,7 @@ export default function ScheduleDisplay() {
 
   return (
     <div className="w-full p-4 py-8 min-h-screen bg-black text-white">
+      <Navbar />
       <div className="max-w-6xl mx-auto space-y-8">
         {/* Table View */}
         <div className="rounded-lg overflow-hidden border border-pink-600">
