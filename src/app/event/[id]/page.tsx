@@ -22,7 +22,8 @@ const events = [
     id: "1",
     title: "Workshop: Ikigai in AI",
     image: "/e1.jpg",
-    description: "In a rapidly evolving world driven by artificial intelligence, understanding the intersection between personal purpose (Ikigai) and AI-driven innovation is crucial. This workshop explores how individuals can align their skills, passions, societal needs, and career opportunities within the AI landscape. Through interactive discussions and real-world case studies, participants will: Discover the principles of Ikigai and how they apply to career growth in AI. Engage in hands-on exercises to map their own Ikigai within AI-related roles.",
+    description:
+      "In a rapidly evolving world driven by artificial intelligence, understanding the intersection between personal purpose (Ikigai) and AI-driven innovation is crucial. This workshop explores how individuals can align their skills, passions, societal needs, and career opportunities within the AI landscape. Through interactive discussions and real-world case studies, participants will: Discover the principles of Ikigai and how they apply to career growth in AI. Engage in hands-on exercises to map their own Ikigai within AI-related roles.",
     date: "March 7, 2025",
     time: "1:30 PM - 3.30 PM ",
     location: "AIR Lab / Hardware Lab",
@@ -30,13 +31,14 @@ const events = [
     prizes: ["None"],
     prerequisites: ["None"],
     registrationDeadline: "March 4, 2025",
-    status: "Upcoming"
+    status: "Upcoming",
   },
   {
     id: "2",
     title: "AI Story Quest",
     image: "/e2.jpg",
-    description: "AI Story Quest is a technical and non-technical event that combines AI tools with storytelling. Participants use AI to generate text and images while adapting to unexpected challenges.\nObjective:\nDevelop skills in prompt engineering and AI-assisted content creation. Improve critical thinking and adaptability by responding to dynamic challenges.Enhance presentation abilities in a competitive setting.",
+    description:
+      "AI Story Quest is a technical and non-technical event that combines AI tools with storytelling. Participants use AI to generate text and images while adapting to unexpected challenges.\nObjective:\nDevelop skills in prompt engineering and AI-assisted content creation. Improve critical thinking and adaptability by responding to dynamic challenges.Enhance presentation abilities in a competitive setting.",
     date: "March 8, 2025",
     time: "1.30 PM - 3.30 PM",
     location: "AIR Lab",
@@ -44,27 +46,29 @@ const events = [
     prizes: ["Winner : ₹2000", "Runner : ₹1000"],
     prerequisites: ["None"],
     registrationDeadline: "March 4, 2025",
-    status: "Upcoming"
+    status: "Upcoming",
   },
   {
     id: "3",
     title: "Family Feud",
     image: "/e3.jpg",
-    description: "This event brings friends together for an engaging and interactive experience, fostering teamwork and strategic thinking. Participants will compete in teams, answering survey-based questions to identify the most popular responses. The game encourages collaboration, quick decision-making, and a spirit of friendly competition. The event aims to create a dynamic and enjoyable environment where participants can test their knowledge, interact meaningfully, and strengthen social bonds through structured gameplay.",
+    description:
+      "This event brings friends together for an engaging and interactive experience, fostering teamwork and strategic thinking. Participants will compete in teams, answering survey-based questions to identify the most popular responses. The game encourages collaboration, quick decision-making, and a spirit of friendly competition. The event aims to create a dynamic and enjoyable environment where participants can test their knowledge, interact meaningfully, and strengthen social bonds through structured gameplay.",
     date: "March 8, 2025",
     time: "9.30 AM - 12.00 PM",
     location: "AIR Lab",
     teamSize: "2-4 members",
-    prizes: ["Winner : ₹2000","Runner : ₹1000"],
+    prizes: ["Winner : ₹2000", "Runner : ₹1000"],
     prerequisites: ["None"],
     registrationDeadline: "March 4, 2025",
-    status: "Upcoming"
+    status: "Upcoming",
   },
   {
     id: "4",
     title: "The Pandemic That Never Happened",
     image: "/e4.jpg",
-    description: "'The Pandemic That Never Happened' is an immersive cybersecurity and digital forensics event where participants must navigate through a fabricated global crisis, analyze digital evidence, and uncover the truth behind the misinformation campaign. The event will simulate a high-stakes investigative scenario in which teams will utilize forensic techniques, threat analysis, and cybersecurity skills to solve the mystery.",
+    description:
+      "'The Pandemic That Never Happened' is an immersive cybersecurity and digital forensics event where participants must navigate through a fabricated global crisis, analyze digital evidence, and uncover the truth behind the misinformation campaign. The event will simulate a high-stakes investigative scenario in which teams will utilize forensic techniques, threat analysis, and cybersecurity skills to solve the mystery.",
     date: "March 7, 2025",
     time: "9:30 AM - 12:00 PM",
     location: "AIR Lab / Programming 1 Lab",
@@ -72,23 +76,23 @@ const events = [
     prizes: ["Winner : ₹2500", "Runner : ₹1500"],
     prerequisites: ["None"],
     registrationDeadline: "March 4, 2025",
-    status: "Upcoming"
+    status: "Upcoming",
   },
   {
     id: "5",
     title: "Nexus - Hackathon",
     image: "/e5.jpg",
-    description: " The flagship event invites participants to explore the intersection of technology and art. Teams are given a mix of tech tools and artistic prompts, challenging them to craft innovative projects that blend creativity with technical expertise. Focused on interdisciplinary collaboration, this hackathon aims to inspire unique breakthroughs and redefine the boundaries of innovation.",
+    description:
+      " The flagship event invites participants to explore the intersection of technology and art. Teams are given a mix of tech tools and artistic prompts, challenging them to craft innovative projects that blend creativity with technical expertise. Focused on interdisciplinary collaboration, this hackathon aims to inspire unique breakthroughs and redefine the boundaries of innovation.",
     date: "March 7, 2025 and March 8, 2025",
     time: "9:00 AM - 12:00 PM",
     location: "SCPS Lab / GRD Lab",
     teamSize: "3-4 members",
-    prizes: ["Winner : ₹5000", "Runner : ₹3000","Second Runner : ₹2000"],
+    prizes: ["Winner : ₹5000", "Runner : ₹3000", "Second Runner : ₹2000"],
     prerequisites: ["None"],
     registrationDeadline: "March 4, 2025",
-    status: "Upcoming"
+    status: "Upcoming",
   },
-
 ];
 
 interface RegisteredEvent {
@@ -107,7 +111,10 @@ export default function EventPage() {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [registeredEvents, setRegisteredEvents] = useState<RegisteredEvent[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [registeredEvents, setRegisteredEvents] = useState<RegisteredEvent[]>(
+    []
+  );
   const [isAlreadyRegistered, setIsAlreadyRegistered] = useState(false);
 
   const event = events.find((e) => e.id === id);
@@ -120,21 +127,24 @@ export default function EventPage() {
   useEffect(() => {
     const fetchRegisteredEvents = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         if (!token) return;
 
-        const response = await axios.get(
-          'https://infinitum-website.onrender.com/api/student/registeredEvents',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const response: any = await axios.get(
+          "https://infinitum-website.onrender.com/api/student/registeredEvents",
           {
             headers: {
               Authorization: `Bearer ${token}`,
-            }
+            },
           }
         );
         setRegisteredEvents(response.data);
-        setIsAlreadyRegistered(response.data.some((e: RegisteredEvent) => e.event_id === id));
+        setIsAlreadyRegistered(
+          response.data.some((e: RegisteredEvent) => e.event_id === id)
+        );
       } catch (error) {
-        console.error('Error fetching registered events:', error);
+        console.error("Error fetching registered events:", error);
       }
     };
 
@@ -155,16 +165,16 @@ export default function EventPage() {
   const confirmRegistration = async () => {
     setIsRegistering(true);
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) return;
 
       const response = await axios.post(
         `https://infinitum-website.onrender.com/api/event/register`,
-        {"event_id": id},
+        { event_id: id },
         {
           headers: {
             Authorization: `Bearer ${token}`,
-          }
+          },
         }
       );
 
@@ -172,7 +182,7 @@ export default function EventPage() {
         setIsAlreadyRegistered(true);
       }
     } catch (error) {
-      console.error('Error registering for event:', error);
+      console.error("Error registering for event:", error);
     } finally {
       setIsRegistering(false);
       setShowConfirmation(false);
@@ -226,18 +236,20 @@ export default function EventPage() {
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <p className="text-gray-300 mb-6">Please login to register for this event.</p>
+            <p className="text-gray-300 mb-6">
+              Please login to register for this event.
+            </p>
             <div className="space-y-4">
               <Button
-                onClick={() => router.push('/login')}
+                onClick={() => router.push("/login")}
                 className="w-full bg-[#fc1464] hover:bg-[#d1004f]"
               >
                 Login
               </Button>
               <p className="text-center text-sm text-gray-400">
-                Don't have an account?{' '}
+                Don&apos;t have an account?{" "}
                 <button
-                  onClick={() => router.push('/register')}
+                  onClick={() => router.push("/register")}
                   className="text-[#fc1464] hover:underline"
                 >
                   Create one
@@ -267,7 +279,9 @@ export default function EventPage() {
               </div>
               <div>
                 <p className="text-gray-400">Date & Time</p>
-                <p className="font-medium">{event.date}, {event.time}</p>
+                <p className="font-medium">
+                  {event.date}, {event.time}
+                </p>
               </div>
               <div>
                 <p className="text-gray-400">Your Details</p>

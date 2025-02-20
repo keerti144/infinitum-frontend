@@ -30,13 +30,13 @@ export default function RegisterPage() {
       router.push("/dashboard");
     }
     const storedName = localStorage.getItem("name") || "";
-  const storedRollNo = localStorage.getItem("roll_no") || "";
+    const storedRollNo = localStorage.getItem("roll_no") || "";
 
-  setFormData((prev) => ({
-    ...prev,
-    name: storedName,
-    rollNo: storedRollNo,
-  }));
+    setFormData((prev) => ({
+      ...prev,
+      name: storedName,
+      rollNo: storedRollNo,
+    }));
     // Show form if redirected from callback with showForm parameter
     if (searchParams.get("showForm") === "true") {
       setShowForm(true);
@@ -109,6 +109,7 @@ export default function RegisterPage() {
       } else {
         setMessage(`Error: ${result.message || "Something went wrong"}`);
       }
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setMessage("Network error, please try again later.");
     } finally {
@@ -167,81 +168,82 @@ export default function RegisterPage() {
           </button>
         ) : (
           <form className="space-y-4" onSubmit={handleSubmit}>
-          <FormField
-            label="Full Name"
-            name="name"
-            value={formData.name}
-            handleChange={handleChange}
-            placeholder="Enter your full name"
-            required
-          />
-          <FormField
-            label="Roll Number"
-            name="rollNo"
-            value={formData.rollNo}
-            handleChange={handleChange}
-            placeholder="Enter your roll number"
-            required
-          />
-          <FormField
-            label="Department"
-            name="department"
-            value={formData.department}
-            handleChange={handleChange}
-            placeholder="Enter your department"
-            required
-          />
-          
-          <div className="flex flex-col">
-            <label className="text-white mb-2">Year</label>
-            <select
-              name="year"
-              value={formData.year}
-              onChange={handleChange}
-              className="form-input bg-zinc-800 text-white p-3 rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-[#fc1464] transition duration-300"
+            <FormField
+              label="Full Name"
+              name="name"
+              value={formData.name}
+              handleChange={handleChange}
+              placeholder="Enter your full name"
               required
+            />
+            <FormField
+              label="Roll Number"
+              name="rollNo"
+              value={formData.rollNo}
+              handleChange={handleChange}
+              placeholder="Enter your roll number"
+              required
+            />
+            <FormField
+              label="Department"
+              name="department"
+              value={formData.department}
+              handleChange={handleChange}
+              placeholder="Enter your department"
+              required
+            />
+
+            <div className="flex flex-col">
+              <label className="text-white mb-2">Year</label>
+              <select
+                name="year"
+                value={formData.year}
+                onChange={handleChange}
+                className="form-input bg-zinc-800 text-white p-3 rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-[#fc1464] transition duration-300"
+                required
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+
+            <FormField
+              label="Phone Number"
+              name="phnNo"
+              value={formData.phnNo}
+              handleChange={handleChange}
+              placeholder="Enter your phone number"
+              required
+            />
+
+            <div className="flex flex-col mb-6">
+              <label className="text-white mb-2">
+                How did you hear about us?
+              </label>
+              <select
+                name="source"
+                value={formData.source}
+                onChange={handleChange}
+                className="form-input bg-zinc-800 text-white p-3 rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-[#fc1464] transition duration-300"
+              >
+                <option value="">Select an option</option>
+                <option value="Social Media">Social Media</option>
+                <option value="Friends">Friends</option>
+                <option value="Advertisement">Advertisement</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <button
+              type="submit"
+              className="form-button w-full mt-4 px-8 py-4 rounded-md bg-[#fc1464] text-white text-lg font-semibold hover:bg-[#f41d72] focus:outline-none focus:ring-4 focus:ring-[#fc1464] transition duration-300 scale-100 hover:scale-105"
+              disabled={loading}
             >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-            </select>
-          </div>
-        
-          <FormField
-            label="Phone Number"
-            name="phnNo"
-            value={formData.phnNo}
-            handleChange={handleChange}
-            placeholder="Enter your phone number"
-            required
-          />
-        
-          <div className="flex flex-col mb-6">
-            <label className="text-white mb-2">How did you hear about us?</label>
-            <select
-              name="source"
-              value={formData.source}
-              onChange={handleChange}
-              className="form-input bg-zinc-800 text-white p-3 rounded-md border border-transparent focus:outline-none focus:ring-2 focus:ring-[#fc1464] transition duration-300"
-            >
-              <option value="">Select an option</option>
-              <option value="Social Media">Social Media</option>
-              <option value="Friends">Friends</option>
-              <option value="Advertisement">Advertisement</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-        
-          <button
-            type="submit"
-            className="form-button w-full mt-4 px-8 py-4 rounded-md bg-[#fc1464] text-white text-lg font-semibold hover:bg-[#f41d72] focus:outline-none focus:ring-4 focus:ring-[#fc1464] transition duration-300 scale-100 hover:scale-105"
-            disabled={loading}
-          >
-            {loading ? "Registering..." : "Register"}
-          </button>
-        </form>
-        
+              {loading ? "Registering..." : "Register"}
+            </button>
+          </form>
         )}
       </div>
     </div>
