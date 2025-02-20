@@ -4,6 +4,8 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Mail } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Phone, Linkedin, Instagram  } from "lucide-react";
+
 
 interface FAQItemProps {
     question: string;
@@ -95,6 +97,36 @@ function FaqInfinitum2025() {
         },
     ];
 
+    const contactsData = [
+        {
+            category: "CSEA",
+            linkedin: "https://www.linkedin.com/in/cseapsgtech/",
+            instagram: "https://www.instagram.com/csea_psgtech/",
+            contacts: [
+                { name: "Arul Kumara", phone: "+91 86102 02823" },
+                { name: "Sreeraghavan", phone: "+91 63857 86223" },
+            ],
+        },
+        {
+            category: "The EYE",
+            linkedin: "https://www.linkedin.com/company/theeye-csea/posts/?feedView=all",
+            instagram: "https://www.instagram.com/theeye_psgtech/",
+            contacts: [
+                { name: "Lohith", phone: "+91 94881 25100" },
+                { name: "Mehul", phone: "+91 86087 15000" },
+            ],
+        },
+        {
+            category: "GHCC",
+            linkedin: "https://www.linkedin.com/company/github-campus-club-psgtech/",
+            instagram: "https://www.instagram.com/ghcc_psgtech/",
+            contacts: [
+                { name: "Pon Manoj", phone: "+91 76038 34434" },
+                { name: "Shashwath", phone: "+91 98456 77934" },
+            ],
+        },
+    ];
+
     return (
         <section className="py-16 w-full bg-black">
             <div className="container px-4 mx-auto">
@@ -112,27 +144,54 @@ function FaqInfinitum2025() {
                         <FAQItem key={index} {...faq} index={index} />
                     ))}
                 </div>
+                
+                <br /><br />
+                <motion.div className="text-center mb-8">
+                    <h2 className="text-3xl font-semibold text-white">Contact Us</h2>
+                    <p className="text-sm text-gray-400">Reach out to our team for any queries!</p>
+                </motion.div> 
 
-                <motion.div className="max-w-md mx-auto mt-12 p-6 rounded-lg text-center">
-                    <div className="inline-flex items-center justify-center p-1.5 rounded-full mb-4 text-gray-300">
-                        <Mail className="h-4 w-4" />
-                    </div>
-                    <p className="text-sm font-medium text-white mb-1">
-                        Still have questions?
-                    </p>
-                    <p className="text-xs text-gray-400 mb-4">
-                        Reach out to the CSEA team for assistance.
-                    </p>
-                    <button
-                        type="button"
-                        className="px-4 py-2 text-sm rounded-md bg-white text-black hover:bg-gray-200 transition-colors duration-200 font-medium"
-                    >
-                        Contact Us
-                    </button>
+                <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-white">
+                    {contactsData.map((group, index) => (
+                        <div key={index} className="text-lg text-center">
+                            {/* Category Name with LinkedIn & Instagram Icons */}
+                            <div className="flex justify-center items-center gap-3 mb-4">
+                                <p className="font-semibold text-pink-500">{group.category}</p>
+
+                                {/* LinkedIn Icon */}
+                                <a href={group.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-500 transition duration-200">
+                                    <Linkedin className="h-5 w-5" />
+                                </a>
+
+                                {/* Instagram Icon */}
+                                <a href={group.instagram} target="_blank" rel="noopener noreferrer" className="text-pink-400 hover:text-pink-500 transition duration-200">
+                                    <Instagram className="h-5 w-5" />
+                                </a>
+                            </div>
+
+                            {/* Contact List - Reduced Font Size */}
+                            <div className="flex flex-col gap-3">
+                                {group.contacts.map((contact, idx) => (
+                                    <div key={idx} className="flex justify-center items-center gap-3">
+                                        <p className="font-medium text-sm">{contact.name}</p>
+
+                                        {/* Phone Icon with Clickable Number */}
+                                        <a href={`tel:${contact.phone}`} className="flex items-center gap-1 hover:text-blue-400 text-sm">
+                                            <Phone className="h-4 w-4 text-gray-400" />
+                                            {contact.phone}
+                                        </a>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
                 </motion.div>
+
+
             </div>
         </section>
     );
 }
 
 export default FaqInfinitum2025;
+
