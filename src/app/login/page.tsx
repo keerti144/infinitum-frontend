@@ -2,26 +2,28 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { signIn } from "next-auth/react";
+// import { signIn } from "next-auth/react";
 import "@/app/login/animations.css";
+
+const BACKEND_URL = "https://infinitum-website.onrender.com";
 
 export default function LoginPage() {
   const handleGoogleLogin = async () => {
     try {
-        const response = await fetch("${BACKEND_URL}/api/auth/google"); 
+      const response = await fetch(`${BACKEND_URL}/api/auth/google`);
 
-        const data = await response.json();
+      const data = await response.json();
 
-        if (data.authUrl) {
-            window.location.href = data.authUrl; // Redirect user to Google OAuth
-        } else {
-            console.error("Failed to get auth URL:", data.message);
-        }
-    } catch (error:unknown) {
-        if (error instanceof Error) {
-          console.error("Google Sign-in Error:", error.message);
+      if (data.authUrl) {
+        window.location.href = data.authUrl; // Redirect user to Google OAuth
       } else {
-          console.error("Google Sign-in Error:", error);
+        console.error("Failed to get auth URL:", data.message);
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Google Sign-in Error:", error.message);
+      } else {
+        console.error("Google Sign-in Error:", error);
       }
     }
   };
@@ -45,7 +47,9 @@ export default function LoginPage() {
 
       {/* Content Box */}
       <div className="relative z-10 bg-zinc-900 p-6 md:p-8 rounded-lg shadow-lg w-full max-w-xs sm:max-w-sm md:max-w-md">
-        <h1 className="text-2xl md:text-3xl font-bold mb-6 text-white text-center">Login</h1>
+        <h1 className="text-2xl md:text-3xl font-bold mb-6 text-white text-center">
+          Login
+        </h1>
 
         {/* Google Sign-In Button */}
         <Button
@@ -57,14 +61,17 @@ export default function LoginPage() {
 
         {/* Register Link */}
         <p className="text-gray-400 text-center mt-4 text-sm md:text-base">
-          Haven't registered yet?{" "}
+          Haven&apos;t registered yet?{" "}
           <Link href="/register" className="text-pink-500 hover:underline">
             Register here
           </Link>
         </p>
 
         {/* Back to Home Button */}
-        <Button asChild className="w-full mt-4 bg-gray-700 hover:bg-gray-800 text-white">
+        <Button
+          asChild
+          className="w-full mt-4 bg-gray-700 hover:bg-gray-800 text-white"
+        >
           <Link href="/">Back to Home</Link>
         </Button>
       </div>

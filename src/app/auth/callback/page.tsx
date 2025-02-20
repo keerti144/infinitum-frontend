@@ -1,65 +1,80 @@
+"use client";
+
 import { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 
 const AuthCallback = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
+  const router = useRouter();
 
-    useEffect(() => {
-        const hashParams = new URLSearchParams(location.hash.substring(1));
-        const accessToken = hashParams.get("access_token");
-        const providerToken = hashParams.get("provider_token");
+  interface AuthResponse {
+    token: string;
+  }
 
-        if (accessToken && providerToken) {
-            exchangeTokenForSession(accessToken, providerToken);
-        } else {
-            console.error("Required tokens not found in URL");
-            navigate("/login");
-        }
-    }, [location]);
+  interface ErrorResponse {
+    message?: string;
+  }
 
-    // Define expected response structure
-    interface AuthResponse {
-        token: string;
-    }
-
-    interface ErrorResponse {
-        message?: string;
-    }
-
-    const exchangeTokenForSession = async (access_token: string, provider_token: string) => {
-        try {
-            const response = await axios.post<AuthResponse>(
-                "http://localhost:4000/api/auth/callback",
-                { access_token, provider_token },
-                { withCredentials: true, headers: { "Content-Type": "application/json" } }
-            );
-
-            localStorage.setItem("token", response.data.token);
-            navigate("/dashboard");
-        } catch (err: unknown) {
-            if (typeof err === "object" && err !== null && "response" in err) {
-                const errorResponse = (err as { response?: { status?: number; data?: unknown } }).response;
-
-                if (errorResponse?.status === 404) {
-                    const data = errorResponse.data as ErrorResponse;
-                    if (data?.message === "Student not found") {
-                        console.warn("Student not found, redirecting to register...");
-                        navigate("/register");
-                        return;
-                    }
-                }
-                
-                console.error("Google login failed:", errorResponse?.data || "Unknown error");
-            } else {
-                console.error("An unknown error occurred.", err);
-            }
-            navigate("/login");
-        }
+  useEffect(() => {
+    const extractTokenFromHash = () => {
+      if (typeof window !== "undefined") {
+        const hashParams = new URLSearchParams(
+          window.location.hash.substring(1)
+        );
+        return hashParams.get("access_token");
+      }
+      return null;
     };
 
-    return <h2>Processing login...</h2>;
+    const exchangeTokenForSession = async (access_token: string) => {
+      try {
+        const response = await axios.post<AuthResponse>(
+          "https://infinitum-website.onrender.com/api/auth/callback",
+          { access_token },
+          {
+            withCredentials: true,
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+
+        localStorage.setItem("token", response.data.token);
+        router.push("/dashboard");
+      } catch (err: unknown) {
+        if (typeof err === "object" && err !== null && "response" in err) {
+          const errorResponse = (
+            err as { response?: { status?: number; data?: unknown } }
+          ).response;
+
+          if (errorResponse?.status === 404) {
+            const data = errorResponse.data as ErrorResponse;
+            if (data?.message === "Student not found") {
+              console.warn("Student not found, redirecting to register...");
+              router.push("/register");
+              return;
+            }
+          }
+
+          console.error(
+            "Google login failed:",
+            errorResponse?.data || "Unknown error"
+          );
+        } else {
+          console.error("An unknown error occurred.", err);
+        }
+        router.push("/login");
+      }
+    };
+
+    const accessToken = extractTokenFromHash();
+    if (accessToken) {
+      exchangeTokenForSession(accessToken);
+    } else {
+      console.error("Required tokens not found in URL");
+      router.push("/login");
+    }
+  }, [router]);
+
+  return <h2>Processing login...</h2>;
 };
 
 export default AuthCallback;

@@ -117,7 +117,7 @@ export default function Hero() {
                     >
                         Explore Events
                     </Button>
-                    <Button asChild variant="outline">
+                    <Button asChild variant="secondary">
                         <a href="/register">Register Now</a>
                     </Button>
                 </motion.div>
