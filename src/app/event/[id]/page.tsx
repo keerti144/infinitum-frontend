@@ -82,7 +82,7 @@ const events = [
   {
     id: "5",
     title: "Nexus - Hackathon",
-    image: "/e5.jpg",
+    image: "/e6.jpg",
     description:
       " The flagship event invites participants to explore the intersection of technology and art. Teams are given a mix of tech tools and artistic prompts, challenging them to craft innovative projects that blend creativity with technical expertise. Focused on interdisciplinary collaboration, this hackathon aims to inspire unique breakthroughs and redefine the boundaries of innovation.",
     date: "March 7, 2025 and March 8, 2025",
@@ -328,6 +328,7 @@ export default function EventPage() {
             className="object-cover"
             priority
           />
+          
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
             <div className="inline-block px-3 py-1 rounded-full bg-[#fc1464] text-white text-xs sm:text-sm font-semibold mb-2 sm:mb-3">
