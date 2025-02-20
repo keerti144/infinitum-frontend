@@ -32,7 +32,7 @@ export default function Portfolio() {
         category: "CSEA",
         image: "/e2.jpg",
         date: "March 8, 2025",
-        location: "3AI Lab",
+        location: "AIR Lab",
         teamSize: "2-3 members",
         shortDescription: "A technical and non-technical event that combines AI tools with storytelling.",
       },
@@ -43,7 +43,7 @@ export default function Portfolio() {
         image: "/e3.jpg",
         date: "March 8, 2025",
         location: "AIR Lab",
-        teamSize: "4-6 members",
+        teamSize: "2-3 members",
         shortDescription: "A team based trivia game fostering team work and quick thinking.",
       },
       {
