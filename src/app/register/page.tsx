@@ -31,11 +31,13 @@ export default function RegisterPage() {
     }
     const storedName = localStorage.getItem("name") || "";
     const storedRollNo = localStorage.getItem("roll_no") || "";
+    const storedYear = localStorage.getItem("year") || "1";
 
     setFormData((prev) => ({
       ...prev,
       name: storedName,
       rollNo: storedRollNo,
+      year: storedYear,
     }));
     // Show form if redirected from callback with showForm parameter
     if (searchParams.get("showForm") === "true") {
@@ -76,6 +78,13 @@ export default function RegisterPage() {
     e.preventDefault();
     setLoading(true);
     setMessage("");
+
+    // Check for required fields
+    if (!formData.name || !formData.rollNo || !formData.department || !formData.year || !formData.phnNo) {
+      setMessage("Please fill in all required fields.");
+      setLoading(false);
+      return;
+    }
 
     try {
       const response = await fetch(
@@ -119,10 +128,19 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center relative overflow-hidden">
-      <div className="absolute inset-0 animate-background-pulse">
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-[#3e3e3e] to-[#fc1464] opacity-80 animate-gradient"></div>
-        <div className="absolute inset-0 bg-noise opacity-15 animate-noise"></div>
-        <div className="absolute inset-0 bg-opacity-20 backdrop-blur-xl animate-blur"></div>
+      {/* Animated Background */}
+      <div className="background-container">
+        {[...Array(30)].map((_, i) => (
+          <div
+            key={i}
+            className="dot"
+            style={{
+              top: `${Math.random() * 100}vh`,
+              left: `${Math.random() * 100}vw`,
+              animationDelay: `${Math.random() * 15}s`,
+            }}
+          ></div>
+        ))}
       </div>
 
       <div className="relative z-10 bg-zinc-900 p-8 rounded-lg shadow-xl max-w-md w-full space-y-6 animate__animated animate__fadeIn mt-16 md:mt-24 md:max-w-sm custom-scrollbar">
@@ -167,9 +185,9 @@ export default function RegisterPage() {
             Register with Google
           </button>
         ) : (
-          <form className="space-y-4" onSubmit={handleSubmit}>
+          <form className="space-y-4 overflow-y-auto max-h-[60vh]" onSubmit={handleSubmit}>
             <FormField
-              label="Full Name"
+              label="Full Name *"
               name="name"
               value={formData.name}
               handleChange={handleChange}
@@ -177,7 +195,7 @@ export default function RegisterPage() {
               required
             />
             <FormField
-              label="Roll Number"
+              label="Roll Number *"
               name="rollNo"
               value={formData.rollNo}
               handleChange={handleChange}
@@ -185,7 +203,7 @@ export default function RegisterPage() {
               required
             />
             <FormField
-              label="Department"
+              label="Department *"
               name="department"
               value={formData.department}
               handleChange={handleChange}
@@ -194,7 +212,7 @@ export default function RegisterPage() {
             />
 
             <div className="flex flex-col">
-              <label className="text-white mb-2">Year</label>
+              <label className="text-white mb-2">Year *</label>
               <select
                 name="year"
                 value={formData.year}
@@ -206,11 +224,12 @@ export default function RegisterPage() {
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
+                <option value="5">5</option>
               </select>
             </div>
 
             <FormField
-              label="Phone Number"
+              label="Phone Number *"
               name="phnNo"
               value={formData.phnNo}
               handleChange={handleChange}
