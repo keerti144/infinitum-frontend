@@ -1,99 +1,183 @@
-"use client"
-
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+"use client";
+import { useRouter } from "next/navigation";
+import { useState, useEffect, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Calendar, MapPin, Users } from "lucide-react";
 
 export default function Portfolio() {
-  const [selectedCategory, setSelectedCategory] = useState("all")
+  const router = useRouter();
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
 
-  const categories = ["all", "digital", "paintings", "sculptures"]
+  const categories = ["All", "GHCC", "The Eye", "CSEA"];
 
-  const works = [
-    {
-      id: 1,
-      title: "Digital Dreamscape",
-      category: "digital",
-      image: "/placeholder.svg?height=400&width=600",
-      year: "2024",
-    },
-    {
-      id: 2,
-      title: "Abstract Harmony",
-      category: "paintings",
-      image: "/placeholder.svg?height=400&width=600",
-      year: "2023",
-    },
-    {
-      id: 3,
-      title: "Metal Flow",
-      category: "sculptures",
-      image: "/placeholder.svg?height=400&width=600",
-      year: "2024",
-    },
-    {
-      id: 4,
-      title: "Neon Nights",
-      category: "digital",
-      image: "/placeholder.svg?height=400&width=600",
-      year: "2023",
-    },
-    {
-      id: 5,
-      title: "Nature's Whisper",
-      category: "paintings",
-      image: "/placeholder.svg?height=400&width=600",
-      year: "2024",
-    },
-    {
-      id: 6,
-      title: "Bronze Echo",
-      category: "sculptures",
-      image: "/placeholder.svg?height=400&width=600",
-      year: "2023",
-    },
-  ]
+  const works = useMemo(
+    () => [
+      {
+        id: 1,
+        title: "Workshop: Ikigai in AI",
+        category: "CSEA",
+        image: "/e1.jpg",
+        date: "March 7, 2025",
+        location: "AIR Lab / Hardware Lab",
+        teamSize: "Individual",
+        shortDescription: "Balancing Passion, Purpose, and Authenticity in Engineering",
+      },
+      {
+        id: 2,
+        title: "AI Story Quest",
+        category: "CSEA",
+        image: "/e2.jpg",
+        date: "March 8, 2025",
+        location: "3AI Lab",
+        teamSize: "2-3 members",
+        shortDescription: "A technical and non-technical event that combines AI tools with storytelling.",
+      },
+      {
+        id: 3,
+        title: "Family Feud",
+        category: "GHCC",
+        image: "/e3.jpg",
+        date: "March 8, 2025",
+        location: "AIR Lab",
+        teamSize: "4-6 members",
+        shortDescription: "A team based trivia game fostering team work and quick thinking.",
+      },
+      {
+        id: 4,
+        title: "The Pandemic That Never Happened",
+        category: "The Eye",
+        image: "/e4.jpg",
+        date: "March 7, 2025",
+        location: "AIR Lab",
+        teamSize: "2-4 members",
+        shortDescription: "A Cybersecurity and digital forensics challenge.",
+      },
+    
+    ],
+    []
+  );
 
-  const filteredWorks = works.filter((work) => (selectedCategory === "all" ? true : work.category === selectedCategory))
+  useEffect(() => {
+    works.forEach((work) => {
+      router.prefetch(`/event/${work.id}`);
+    });
+  }, [works, router]);
+
+  const filteredWorks = works.filter((work) =>
+    selectedCategory === "All" ? true : work.category === selectedCategory
+  );
 
   return (
-    <section className="bg-black py-20">
-      <div className="container mx-auto px-4">
-        <div className="mb-12 flex flex-wrap justify-center gap-4">
-          {categories.map((category) => (
-            <Button
+    <section id="portfolio" className="bg-black py-16 px-4 md:px-8">
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="container mx-auto"
+      >
+        <div className="text-center mb-12">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400"
+          >
+            Upcoming Events
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-gray-400 max-w-2xl mx-auto"
+          >
+            Discover our exciting lineup of tech events and competitions
+          </motion.p>
+        </div>
+
+        <div className="mb-8 flex flex-wrap justify-center gap-4">
+          {categories.map((category, index) => (
+            <motion.div
               key={category}
-              variant={selectedCategory === category ? "default" : "outline"}
-              onClick={() => setSelectedCategory(category)}
-              className="text-sm capitalize"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              {category}
-            </Button>
+              <Button
+                onClick={() => setSelectedCategory(category)}
+                className={`px-6 py-2 rounded-full transition-all duration-300 ${
+                  selectedCategory === category
+                    ? "bg-[#fc1464] text-white shadow-lg shadow-[#fc1464]/20"
+                    : "bg-zinc-800 text-gray-300 hover:bg-zinc-700"
+                }`}
+              >
+                {category}
+              </Button>
+            </motion.div>
           ))}
         </div>
-        <motion.div layout className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+
+        <motion.div
+          layout
+          className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+        >
           <AnimatePresence>
             {filteredWorks.map((work) => (
               <motion.div
                 key={work.id}
                 layout
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.5 }}
+                onHoverStart={() => setHoveredId(work.id)}
+                onHoverEnd={() => setHoveredId(null)}
               >
-                <Card className="overflow-hidden bg-zinc-900">
-                  <CardContent className="p-0">
-                    <div className="group relative">
-                      <img
-                        src={work.image || "/placeholder.svg"}
+                <Card
+                  className="group relative overflow-hidden bg-zinc-900 border-zinc-800 h-[400px] cursor-pointer"
+                  onClick={() => router.push(`/event/${work.id}`)}
+                >
+                  <CardContent className="p-0 h-full">
+                    <div className="relative h-full">
+                      <motion.img
+                        src={work.image}
                         alt={work.title}
-                        className="w-full transition-transform duration-500 group-hover:scale-105"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                        <h3 className="text-xl font-semibold text-white">{work.title}</h3>
-                        <p className="mt-2 text-sm text-gray-300">{work.year}</p>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80" />
+
+                      <div className="absolute inset-0 p-6 flex flex-col justify-end">
+                        <div className="space-y-4">
+                          <div className="flex items-center gap-2">
+                            <span className="px-3 py-1 rounded-full bg-[#fc1464] text-white text-sm">
+                              {work.category}
+                            </span>
+                          </div>
+                          <h3 className="text-2xl font-bold text-white">
+                            {work.title}
+                          </h3>
+                          <p className="text-gray-300">
+                            {work.shortDescription}
+                          </p>
+
+                          <div className="space-y-2 text-sm text-gray-300">
+                            <div className="flex items-center gap-2">
+                              <Calendar className="w-4 h-4 text-[#fc1464]" />
+                              <span>{work.date}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <MapPin className="w-4 h-4 text-[#fc1464]" />
+                              <span>{work.location}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Users className="w-4 h-4 text-[#fc1464]" />
+                              <span>{work.teamSize}</span>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -102,8 +186,7 @@ export default function Portfolio() {
             ))}
           </AnimatePresence>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
-  )
+  );
 }
-
