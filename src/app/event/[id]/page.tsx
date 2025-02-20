@@ -179,7 +179,12 @@ export default function EventPage() {
         }
       );
 
-      if (response.status === 200) {
+      if (response.status === 201) {
+        // Update the state immediately
+        setRegisteredEvents((prev) => [
+          ...prev,
+          { event_id: id as string, event: { event_name: event?.title || "" } },
+        ]);
         setIsAlreadyRegistered(true);
       }
     } catch (error) {

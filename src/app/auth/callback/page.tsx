@@ -2,11 +2,12 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/AuthContext";
 import axios from "axios";
 
 const AuthCallback = () => {
   const router = useRouter();
-
+  const { setAuthState } = useAuth();
   interface AuthResponse {
     token: string;
   }
@@ -38,6 +39,7 @@ const AuthCallback = () => {
         );
 
         localStorage.setItem("token", response.data.token);
+        await setAuthState(response.data.token);
         router.push("/dashboard");
       } catch (err: unknown) {
         if (typeof err === "object" && err !== null && "response" in err) {
@@ -85,7 +87,7 @@ const AuthCallback = () => {
       console.error("Required tokens not found in URL");
       router.push("/login");
     }
-  }, [router]);
+  }, [router, setAuthState]);
 
   return <h2>Processing login...</h2>;
 };

@@ -41,7 +41,6 @@ export default function RegisterPage() {
       ...prev,
       name: storedName,
       rollNo: storedRollNo,
-      year: storedYear,
     }));
 
     if (searchParams.get("showForm") === "true") {
