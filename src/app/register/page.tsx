@@ -41,6 +41,7 @@ export default function RegisterPage() {
       ...prev,
       name: storedName,
       rollNo: storedRollNo,
+      year: storedYear,
     }));
 
     if (searchParams.get("showForm") === "true") {
@@ -81,6 +82,19 @@ export default function RegisterPage() {
     e.preventDefault();
     setLoading(true);
     setMessage("");
+
+    // Check for required fields
+    if (
+      !formData.name ||
+      !formData.rollNo ||
+      !formData.department ||
+      !formData.year ||
+      !formData.phnNo
+    ) {
+      setMessage("Please fill in all required fields.");
+      setLoading(false);
+      return;
+    }
 
     try {
       const response = await fetch(
