@@ -119,10 +119,19 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center relative overflow-hidden">
-      <div className="absolute inset-0 animate-background-pulse">
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-[#3e3e3e] to-[#fc1464] opacity-80 animate-gradient"></div>
-        <div className="absolute inset-0 bg-noise opacity-15 animate-noise"></div>
-        <div className="absolute inset-0 bg-opacity-20 backdrop-blur-xl animate-blur"></div>
+      {/* Animated Background */}
+      <div className="background-container">
+        {[...Array(30)].map((_, i) => (
+          <div
+            key={i}
+            className="dot"
+            style={{
+              top: `${Math.random() * 100}vh`,
+              left: `${Math.random() * 100}vw`,
+              animationDelay: `${Math.random() * 15}s`,
+            }}
+          ></div>
+        ))}
       </div>
 
       <div className="relative z-10 bg-zinc-900 p-8 rounded-lg shadow-xl max-w-md w-full space-y-6 animate__animated animate__fadeIn mt-16 md:mt-24 md:max-w-sm custom-scrollbar">
