@@ -31,11 +31,13 @@ export default function RegisterPage() {
     }
     const storedName = localStorage.getItem("name") || "";
     const storedRollNo = localStorage.getItem("roll_no") || "";
+    const storedYear = localStorage.getItem("year") || "1";
 
     setFormData((prev) => ({
       ...prev,
       name: storedName,
       rollNo: storedRollNo,
+      year: storedYear,
     }));
     // Show form if redirected from callback with showForm parameter
     if (searchParams.get("showForm") === "true") {
@@ -176,7 +178,7 @@ export default function RegisterPage() {
             Register with Google
           </button>
         ) : (
-          <form className="space-y-4" onSubmit={handleSubmit}>
+          <form className="space-y-4 overflow-y-auto max-h-[60vh]" onSubmit={handleSubmit}>
             <FormField
               label="Full Name"
               name="name"

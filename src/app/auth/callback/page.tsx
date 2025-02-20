@@ -28,23 +28,28 @@ const AuthCallback = () => {
 
     const getUserEmailAndName = async (accessToken: string) => {
       try {
-          const response = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-              headers: { Authorization: `Bearer ${accessToken}` },
-          });
-  
-          if (!response.ok) {
-              throw new Error("Failed to fetch user info");
-          }
-  
-          const { email, name } = await response.json(); // Extract only email & name
-          console.log("Email:", email);
-          console.log("Name:", name);
-          localStorage.setItem("roll_no",email.split('@')[0].toUppercase());
-          localStorage.setItem("name",name);
+        const response = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch user info");
+        }
+
+        const { email, name } = await response.json(); // Extract only email & name
+        console.log("Email:", email);
+        console.log("Name:", name);
+
+        const rollNo = email.split('@')[0].substring(0, 5).toUpperCase();
+        const year = new Date().getFullYear() - parseInt(rollNo.substring(0, 2));
+
+        localStorage.setItem("roll_no", rollNo);
+        localStorage.setItem("name", name);
+        localStorage.setItem("year", year.toString());
       } catch (error) {
-          console.error("Error fetching user info:", error);
+        console.error("Error fetching user info:", error);
       }
-  };
+    };
 
     const exchangeTokenForSession = async (access_token: string) => {
       try {
