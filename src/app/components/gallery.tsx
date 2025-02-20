@@ -4,7 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import Image from "next/image";
 import ReactCardFlip from "react-card-flip";
-import { Trophy, Calendar, MapPin } from "lucide-react";
+import { Trophy } from "lucide-react";
 
 export default function Gallery() {
   const ref = useRef(null);
@@ -92,8 +92,8 @@ export default function Gallery() {
           {images.map((image, index) => (
             <ReactCardFlip
               key={index}
-              isFlipped={flippedStates[index]}
-              flipDirection="horizontal"
+              className="flip-card w-96 h-96 cursor-pointer overflow-hidden rounded-lg shadow-lg"
+              onClick={() => handleFlip(index)}
             >
               {/* Front Side */}
               <motion.div
@@ -171,6 +171,45 @@ export default function Gallery() {
           ))}
         </div>
       </div>
+
+      {/* CSS Styling */}
+      <style jsx>{`
+        .flip-card {
+          perspective: 1000px;
+        }
+
+        .flip-card-inner {
+          width: 100%;
+          height: 100%;
+          transition: transform 0.6s;
+          transform-style: preserve-3d; 
+          position: relative;
+        }
+
+        .flip-card-inner.flipped {
+          transform: rotateY(180deg); 
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+          backface-visibility: hidden;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .flip-card-front {
+          background-color: #fff;
+        }
+
+        .flip-card-back {
+          background-color: #fff;
+          transform: rotateY(180deg); 
+        }
+      `}</style>
     </section>
   );
 }

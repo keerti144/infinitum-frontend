@@ -81,12 +81,7 @@ const events: Event[] = [
   },
 ];
 
-
-const timeSlots = Array.from({ length: 11 }, (_, i) => `${i + 11}:00`);
-
 const timeSlots1 = Array.from({ length: 10 }, (_, i) => `${i + 9}:00`);
-const timeSlots2 = Array.from({ length: 10 }, (_, i) => `${i + 9}:00`);
-
 
 export default function ScheduleDisplay() {
   const [selectedEvents, setSelectedEvents] = useState<Set<string>>(new Set());
@@ -184,23 +179,28 @@ export default function ScheduleDisplay() {
                       animate={{ scaleX: 1 }}
                       transition={{ duration: 0.3 }}
                       className={`absolute left-[200px] h-full ${
-                      selectedEvents.has(event.id)
-                        ? "bg-pink-600/25"
-                        : "bg-gray-700/25"
+                        selectedEvents.has(event.id)
+                          ? "bg-pink-600/25"
+                          : "bg-gray-700/25"
                       }`}
-                      style={({
-                      left: `calc(200px + ${
-                        (Number.parseInt(event.startTime) - 9 + Number.parseInt(event.startTime.split(":")[1])/85) * (100 / 10)
-                      }% `,
-                      width: `${
-                        (((Number.parseInt(event.endTime) -
-                        Number.parseInt(event.startTime)) *
-                        100) /
-                        13) - (event.offset ?? 0) 
-                      }%`,
-                      transformOrigin: "left",
-                      })}
-                    > 
+                      style={{
+                        left: `calc(200px + ${
+                          (Number.parseInt(event.startTime) -
+                            9 +
+                            Number.parseInt(event.startTime.split(":")[1]) /
+                              85) *
+                          (100 / 10)
+                        }% `,
+                        width: `${
+                          ((Number.parseInt(event.endTime) -
+                            Number.parseInt(event.startTime)) *
+                            100) /
+                            13 -
+                          (event.offset ?? 0)
+                        }%`,
+                        transformOrigin: "left",
+                      }}
+                    >
                       <div className="p-2 truncate">{event.name}</div>
                     </motion.div>
                   </motion.div>

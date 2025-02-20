@@ -1,44 +1,37 @@
 "use client";
-import { useState, useEffect } from "react";
+const url = "https://infinitum-website.onrender.com";
+
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-
+interface LoginResponse {
+  token: string;
+}
 const AdminLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isClient, setIsClient] = useState(false); // Ensures client-side execution
   const router = useRouter();
-
-  // Ensure this component runs only on the client
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/auth/admin/login",
-        { username, password }
+      const response = await axios.post<LoginResponse>(
+        `${url}/api/auth/admin/login`,
+        {
+          username,
+          password,
+        }
       );
-
-      const { token } = response.data as { token: string };
-
-      if (isClient) {
-        localStorage.setItem("isAdminLoggedIn", "true");
-        localStorage.setItem("auth_token", token);
-      }
-
+      const { token } = response.data;
+      localStorage.setItem("isAdminLoggedIn", "true");
+      localStorage.setItem("auth_token", token);
       router.push("/admin/admindashboard");
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err: unknown) {
-      setError("Invalid username or password");
+    } catch (error: unknown) {
+      setError("Invalid username or password" + error);
     }
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#1A1A2E] text-white">
       <div className="bg-[#16213E] p-8 rounded-xl shadow-lg w-96">
