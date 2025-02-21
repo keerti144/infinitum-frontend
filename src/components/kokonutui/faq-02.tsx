@@ -103,6 +103,7 @@ function FaqInfinitum2025() {
             linkedin: "https://www.linkedin.com/in/cseapsgtech/",
             instagram: "https://www.instagram.com/csea_psgtech/",
             contacts: [
+                { name: "Mithilesh", phone: "+91 88839 12299" },
                 { name: "Arul Kumara", phone: "+91 86102 02823" },
                 { name: "Sreeraghavan", phone: "+91 63857 86223" },
             ],
