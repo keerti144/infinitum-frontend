@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/AuthContext"; // Import useAuth
 import "@/app/login/animations.css";
-import Navbar from "../components/navbar";
+import { Navbar } from "../components/navbar";
 
 const BACKEND_URL = "https://infinitum-website.onrender.com";
 

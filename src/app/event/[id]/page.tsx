@@ -14,7 +14,7 @@ import {
   ChevronUp,
   X,
 } from "lucide-react";
-import Navbar from "@/app/components/navbar";
+import { Navbar } from "@/app/components/navbar";
 import { useAuth } from "@/lib/AuthContext";
 import axios from "axios";
 
@@ -333,7 +333,7 @@ export default function EventPage() {
             className="object-cover"
             priority
           />
-          
+
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
             <div className="inline-block px-3 py-1 rounded-full bg-[#fc1464] text-white text-xs sm:text-sm font-semibold mb-2 sm:mb-3">

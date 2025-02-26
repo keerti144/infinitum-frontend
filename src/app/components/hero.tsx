@@ -129,7 +129,7 @@ export default function Hero() {
             </Button>
           ) : (
             <Button asChild variant="secondary">
-              <a href="/dashboard">Dashboard</a>
+              <a href="/dashboard">Event Timeline</a>
             </Button>
           )}
         </motion.div>

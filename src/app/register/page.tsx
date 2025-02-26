@@ -4,7 +4,7 @@ import type React from "react";
 
 import FormField from "./FormField";
 import "./animation.css";
-import Navbar from "../components/navbar";
+import { Navbar } from "../components/navbar";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/AuthContext";
 

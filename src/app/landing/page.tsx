@@ -4,7 +4,7 @@ import Portfolio from "../components/portfolio";
 import Footer from "../components/footer";
 import HeroGeometric from "@/components/kokonutui/hero-geometric";
 import Faq02 from "@/components/kokonutui/faq-02";
-import Navbar from "../components/navbar";
+import { Navbar } from "../components/navbar";
 
 export default function Page() {
   return (

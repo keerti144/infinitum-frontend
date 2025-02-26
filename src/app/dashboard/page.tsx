@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { motion, AnimatePresence } from "framer-motion";
-import Navbar from "../components/navbar";
+import { Navbar } from "../components/navbar";
 
 interface Event {
   date: string;
