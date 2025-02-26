@@ -66,14 +66,14 @@ export function Navbar() {
               />
             </Link>
 
-            <div className="hidden md:flex space-x-8">
+            <div className="hidden md:flex flex-grow justify-center">
               {navItems.map((item) => (
                 <NavLink
                   key={item.href}
                   href={item.href}
-                  className={
+                  className={`mx-4 ${
                     item.label === "Flagship" ? styles.animateTextWave : ""
-                  }
+                  }`}
                 >
                   {item.label}
                 </NavLink>
@@ -183,7 +183,7 @@ function AuthButtons({
         <>
           <Button
             asChild
-            className="w-full bg-white text-black hover:bg-[#D3D3D3] hover:text-black"
+            className="bg-white text-black hover:bg-[#D3D3D3] hover:text-black"
           >
             <Link href="/register">Register</Link>
           </Button>
