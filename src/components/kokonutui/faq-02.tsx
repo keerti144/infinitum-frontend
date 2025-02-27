@@ -92,7 +92,7 @@ function FaqInfinitum2025() {
     {
       question: "Are there non-technical events?",
       answer:
-        "Yes! We have Family Feud and AI StoryQuest which offer engaging experiences beyond coding.",
+        "Yes! We have Quiz Roulette and AI StoryQuest which offer engaging experiences beyond coding.",
     },
     {
       question: "How can I register?",
