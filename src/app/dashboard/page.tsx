@@ -55,7 +55,7 @@ const events: Event[] = [
   {
     id: "5",
     date: "2025-03-08",
-    name: "Family Feud",
+    name: "Quiz Roulette",
     startTime: "09:30",
     endTime: "12:00",
   },
