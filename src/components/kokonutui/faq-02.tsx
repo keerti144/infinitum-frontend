@@ -92,7 +92,7 @@ function FaqInfinitum2025() {
     {
       question: "Are there non-technical events?",
       answer:
-        "Yes! We have Family Feud and AI StoryQuest which offer engaging experiences beyond coding.",
+        "Yes! We have Quiz Roulette and AI StoryQuest which offer engaging experiences beyond coding.",
     },
     {
       question: "How can I register?",
@@ -105,7 +105,7 @@ function FaqInfinitum2025() {
     {
       category: "CSEA",
       linkedin: "https://www.linkedin.com/in/cseapsgtech/",
-      instagram: "https://www.instagram.com/cseapsgtech/",
+      instagram: "https://www.instagram.com/cseapsgtech",
       contacts: [
         { name: "Mithilesh", phone: "+91 88839 12299" },
         { name: "Arul Kumara", phone: "+91 86102 02823" },
@@ -116,7 +116,7 @@ function FaqInfinitum2025() {
       category: "The EYE",
       linkedin:
         "https://www.linkedin.com/company/theeye-csea/posts/?feedView=all",
-      instagram: "https://www.instagram.com/theeye.network/",
+      instagram: "https://www.instagram.com/theeye.network",
       contacts: [
         { name: "Lohith", phone: "+91 94881 25100" },
         { name: "Mehul", phone: "+91 86087 15000" },
