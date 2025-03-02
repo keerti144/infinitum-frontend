@@ -89,11 +89,11 @@ function FaqInfinitum2025() {
       answer:
         "We offer a workshop on Ikigai in AI, which explores the intersection of artificial intelligence and human values. Participants will learn about ethical AI and its applications and how to navigate the AI landscape",
     },
-    {
-      question: "Are there non-technical events?",
-      answer:
-        "Yes! We have Quiz Roulette and AI StoryQuest which offer engaging experiences beyond coding.",
-    },
+    // {
+    //   question: "Are there non-technical events?",
+    //   answer:
+    //     "Yes! We have Quiz Roulette and AI StoryQuest which offer engaging experiences beyond coding.",
+    // },
     {
       question: "How can I register?",
       answer:
