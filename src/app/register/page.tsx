@@ -7,8 +7,7 @@ import "./animation.css";
 import { Navbar } from "../components/navbar";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/lib/AuthContext";
-
-const BACKEND_URL = "https://infinitum-website.onrender.com";
+import { BACKEND_URL } from "../../../production.config";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -96,23 +95,20 @@ export default function RegisterPage() {
     }
 
     try {
-      const response = await fetch(
-        "https://infinitum-website.onrender.com/api/auth/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: formData.name,
-            roll_no: formData.rollNo,
-            department: formData.department,
-            year: formData.year,
-            phn_no: formData.phnNo,
-            source: formData.source,
-          }),
-        }
-      );
+      const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          roll_no: formData.rollNo,
+          department: formData.department,
+          year: formData.year,
+          phn_no: formData.phnNo,
+          source: formData.source,
+        }),
+      });
 
       const result = await response.json();
       console.log(result);

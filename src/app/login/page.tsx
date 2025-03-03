@@ -5,8 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/AuthContext"; // Import useAuth
 import "@/app/login/animations.css";
 import { Navbar } from "../components/navbar";
-
-const BACKEND_URL = "https://infinitum-website.onrender.com";
+import { BACKEND_URL } from "../../../production.config";
 
 export default function LoginPage() {
   const { setAuthState } = useAuth(); // Access setAuthState from context

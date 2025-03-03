@@ -16,6 +16,7 @@ import {
 import { Navbar } from "@/app/components/navbar";
 import { useAuth } from "@/lib/AuthContext";
 import axios from "axios";
+import { BACKEND_URL } from "../../../../production.config";
 
 const events = [
   {
@@ -132,7 +133,7 @@ export default function EventPage() {
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const response: any = await axios.get(
-          "https://infinitum-website.onrender.com/api/student/registeredEvents",
+          `${BACKEND_URL}/api/student/registeredEvents`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/AuthContext";
 import axios from "axios";
+import { BACKEND_URL } from "../../../../production.config";
 
 const AuthCallback = () => {
   const router = useRouter();
@@ -30,7 +31,7 @@ const AuthCallback = () => {
     const exchangeTokenForSession = async (access_token: string) => {
       try {
         const response = await axios.post<AuthResponse>(
-          "https://infinitum-website.onrender.com/api/auth/callback",
+          `${BACKEND_URL}/api/auth/callback`,
           { access_token },
           {
             withCredentials: true,

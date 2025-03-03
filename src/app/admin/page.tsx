@@ -1,9 +1,9 @@
 "use client";
-const url = "https://infinitum-website.onrender.com";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { BACKEND_URL } from "../../../production.config.js";
 interface LoginResponse {
   token: string;
 }
@@ -18,7 +18,7 @@ const AdminLogin = () => {
 
     try {
       const response = await axios.post<LoginResponse>(
-        `${url}/api/auth/admin/login`,
+        `${BACKEND_URL}/api/auth/admin/login`,
         {
           username,
           password,
