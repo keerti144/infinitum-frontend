@@ -21,6 +21,7 @@
     "dhtmlx-gantt": "^9.0.3",
     "framer-motion": "^12.4.1",
     "gsap": "^3.12.7",
+    "ldrs": "^1.0.2",
     "lucide-react": "^0.475.0",
     "motion": "^12.4.1",
     "next": "15.1.6",
