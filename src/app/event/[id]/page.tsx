@@ -8,7 +8,6 @@ import {
   Calendar,
   Clock,
   Users,
-  Trophy,
   MapPin,
   ChevronDown,
   ChevronUp,
@@ -454,7 +453,7 @@ export default function EventPage() {
 
           {/* Right Column - Prizes and Registration */}
           <div className="space-y-6">
-            <motion.div
+            {/* <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
@@ -474,7 +473,7 @@ export default function EventPage() {
                   </li>
                 ))}
               </ul>
-            </motion.div>
+            </motion.div> */}
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
