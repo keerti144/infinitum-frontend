@@ -1,1 +1,1 @@
-export const BACKEND_URL = 'https://infinitum-website.onrender.com';
+export const BACKEND_URL = 'https://infinitumdb.psgtech.ac.in';
