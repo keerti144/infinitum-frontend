@@ -485,12 +485,12 @@ export default function EventPage() {
               <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[#fc1464]">
                 Registration
               </h2>
-              <p className="text-gray-200 text-sm sm:text-base mb-4">
+              {/* <p className="text-gray-200 text-sm sm:text-base mb-4">
                 Registration Deadline:{" "}
                 <span className="font-semibold">
                   {event.registrationDeadline}
                 </span>
-              </p>
+              </p> */}
               <Button
                 onClick={handleRegister}
                 disabled={isRegistering || isAlreadyRegistered}
