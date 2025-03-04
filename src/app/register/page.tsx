@@ -21,6 +21,7 @@ export default function RegisterPage() {
     year: "1",
     phnNo: "",
     source: "",
+    referral: ""
   });
 
   const [loading, setLoading] = useState(false);
@@ -106,7 +107,9 @@ export default function RegisterPage() {
           department: formData.department,
           year: formData.year,
           phn_no: formData.phnNo,
-          referral_source: formData.source,
+          source: formData.source,
+          referral: formData.referral
+
         }),
       });
 
@@ -203,6 +206,8 @@ export default function RegisterPage() {
                 required
               />
 
+
+
               <div className="flex flex-col">
                 <label className="text-white mb-2">Year</label>
                 <select
@@ -246,6 +251,15 @@ export default function RegisterPage() {
                   <option value="Other">Other</option>
                 </select>
               </div>
+
+              <FormField
+                label="Refered By"
+                name="referral"
+                value={formData.referral}
+                handleChange={handleChange}
+                placeholder="Refered By whom? (Optional)"
+                required
+              />
 
               <button
                 type="submit"
