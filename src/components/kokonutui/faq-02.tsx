@@ -128,7 +128,7 @@ function FaqInfinitum2025() {
       instagram: "https://www.instagram.com/githubcampusclub.psgtech/",
       contacts: [
         { name: "Pon Manoj", phone: "+91 76038 34434" },
-        { name: "Shashwath", phone: "+91 98456 77934" },
+        { name: "Akash", phone: "+91 99438 03882" },
       ],
     },
   ];
