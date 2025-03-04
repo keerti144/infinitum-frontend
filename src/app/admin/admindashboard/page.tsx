@@ -1,5 +1,5 @@
 "use client";
-const url = "https://infinitum-website.onrender.com";
+const url = "https://infinitumdb.psgtech.ac.in";
 console.log(url);
 
 import { useEffect, useState } from "react";
@@ -40,7 +40,6 @@ const AdminDashboard = () => {
     const storedToken = localStorage.getItem("auth_token");
     if (storedToken) {
       setToken(storedToken);
-      console.log(storedToken);
     } else {
       console.error("Token not found in localStorage!");
       router.replace("/admin");
@@ -77,7 +76,7 @@ const AdminDashboard = () => {
       return;
     }
     try {
-      console.log("Current token:", token);
+      //console.log("Current token:", token);
       const response = await axios.get<Student[]>(
         `${url}/api/event/fetch/${eventId}`,
         {
@@ -94,7 +93,7 @@ const AdminDashboard = () => {
           },
           event: eventId,
         }));
-        console.log("Formatted Students:", formattedStudents);
+        //console.log("Formatted Students:", formattedStudents);
         setStudents(formattedStudents);
       }
     } catch (error) {
@@ -212,14 +211,20 @@ const AdminDashboard = () => {
             <option key="default" value="">
               Select an event
             </option>
-            <option key="1234" value="1234">
+            <option key="2" value="2">
               AI Story Quest
             </option>
-            <option key="2" value="2">
-              Pandemic
+            <option key="1" value="1">
+              Workshop: Ikigai in AI
+            </option>
+            <option key="5" value="5">
+              Nexus - Hackathon
+            </option>
+            <option key="4" value="4">
+              The Pandemic 
             </option>
             <option key="3" value="3">
-              Family Feud
+              Quiz roulette
             </option>
           </select>
         </div>
