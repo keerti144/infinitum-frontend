@@ -83,7 +83,7 @@ export function MobileMenu({
                   variant="outline"
                   className="w-full border-zinc-700 text-white hover:bg-zinc-800"
                 >
-                  <LogOut className="mr-2 h-4 w-4" />
+                  <LogOut className="w-full bg-primary hover:bg-primary/90"/>
                   Sign out
                 </Button>
               </div>
@@ -97,8 +97,7 @@ export function MobileMenu({
                 </Button>
                 <Button
                   asChild
-                  variant="outline"
-                  className="w-full border-zinc-700 text-white hover:bg-zinc-800"
+                  className="w-full bg-primary hover:bg-primary/90"
                 >
                   <Link href="/login">Login</Link>
                 </Button>

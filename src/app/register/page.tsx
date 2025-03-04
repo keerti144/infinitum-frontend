@@ -106,7 +106,7 @@ export default function RegisterPage() {
           department: formData.department,
           year: formData.year,
           phn_no: formData.phnNo,
-          source: formData.source,
+          referral_source: formData.source,
         }),
       });
 
