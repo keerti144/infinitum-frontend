@@ -19,21 +19,21 @@ import axios from "axios";
 import { BACKEND_URL } from "../../../../production.config";
 
 const events = [
-  {
-    id: "1",
-    title: "Workshop: Ikigai in AI",
-    image: "/e1.jpg",
-    description:
-      "In a rapidly evolving world driven by artificial intelligence, understanding the intersection between personal purpose (Ikigai) and AI-driven innovation is crucial. This workshop explores how individuals can align their skills, passions, societal needs, and career opportunities within the AI landscape. Through interactive discussions and real-world case studies, participants will: Discover the principles of Ikigai and how they apply to career growth in AI. Engage in hands-on exercises to map their own Ikigai within AI-related roles.",
-    date: "March 7, 2025",
-    time: "1:30 PM - 3.30 PM ",
-    location: "AIR Lab / Hardware Lab",
-    teamSize: "Individual",
-    prizes: ["None"],
-    prerequisites: ["None"],
-    registrationDeadline: "March 4, 2025",
-    status: "Upcoming",
-  },
+  // {
+  //   id: "1",
+  //   title: "Workshop: Ikigai in AI",
+  //   image: "/e1.jpg",
+  //   description:
+  //     "In a rapidly evolving world driven by artificial intelligence, understanding the intersection between personal purpose (Ikigai) and AI-driven innovation is crucial. This workshop explores how individuals can align their skills, passions, societal needs, and career opportunities within the AI landscape. Through interactive discussions and real-world case studies, participants will: Discover the principles of Ikigai and how they apply to career growth in AI. Engage in hands-on exercises to map their own Ikigai within AI-related roles.",
+  //   date: "March 7, 2025",
+  //   time: "1:30 PM - 3.30 PM ",
+  //   location: "AIR Lab / Hardware Lab",
+  //   teamSize: "Individual",
+  //   prizes: ["None"],
+  //   prerequisites: ["None"],
+  //   registrationDeadline: "March 4, 2025",
+  //   status: "Upcoming",
+  // },
   {
     id: "2",
     title: "AI Story Quest",
@@ -168,7 +168,7 @@ export default function EventPage() {
     try {
       const token = localStorage.getItem("token");
       if (!token) return;
-
+      
       const response = await axios.post(
         `https://infinitumdb.psgtech.ac.in/api/event/register`,
         { event_id: id },

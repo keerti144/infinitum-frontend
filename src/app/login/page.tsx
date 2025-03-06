@@ -2,29 +2,31 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/lib/AuthContext"; // Import useAuth
 import "@/app/login/animations.css";
 import { Navbar } from "../components/navbar";
-import { BACKEND_URL } from "../../../production.config";
 
 export default function LoginPage() {
-  const { setAuthState } = useAuth(); // Access setAuthState from context
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleLogin  = async () => {
     try {
-      const response = await fetch(`${BACKEND_URL}/api/auth/google`);
-      const data = await response.json();
+      const client_id = "415094605797-1a7k9df1k9atqltf47up2mgnf8lqdksk.apps.googleusercontent.com";
 
-      if (data.authUrl) {
-        window.location.href = data.authUrl; // Redirect to Google OAuth
-      } else if (data.token) {
-        // If backend returns a token directly (after OAuth callback)
-        await setAuthState(data.token);
+  
+      const authUrl = `https://accounts.google.com/o/oauth2/auth?
+                          client_id=${client_id}&
+                          redirect_uri=https://infinitum.psgtech.ac.in/auth/callback&
+                          response_type=code&
+                          scope=email%20profile&
+                          access_type=offline&
+                          prompt=consent`;
+  
+      window.location.href = authUrl; // Redirect user to Google login
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Google Sign-in Error:", error.message);
       } else {
-        console.error("Failed to get auth URL or token:", data.message);
+        console.error("Google Sign-in Error:", error);
       }
-    } catch (error) {
-      console.error("Google Sign-in Error:", error);
     }
   };
 

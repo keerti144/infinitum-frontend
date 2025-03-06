@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/AuthContext";
 import axios from "axios";
@@ -9,6 +9,8 @@ import { BACKEND_URL } from "../../../../production.config";
 const AuthCallback = () => {
   const router = useRouter();
   const { setAuthState } = useAuth();
+  const [processing, setProcessing] = useState(false);
+
   interface AuthResponse {
     token: string;
   }
@@ -18,77 +20,74 @@ const AuthCallback = () => {
   }
 
   useEffect(() => {
-    const extractTokenFromHash = () => {
+    if (processing) return; // Prevent multiple API calls
+    setProcessing(true);
+
+    const extractAuthCode = () => {
       if (typeof window !== "undefined") {
-        const hashParams = new URLSearchParams(
-          window.location.hash.substring(1)
-        );
-        return hashParams.get("access_token");
+        const queryParams = new URLSearchParams(window.location.search);
+        return queryParams.get("code");
       }
       return null;
     };
 
-    const exchangeTokenForSession = async (access_token: string) => {
+    const exchangeCodeForToken = async (code: string) => {
       try {
         const response = await axios.post<AuthResponse>(
           `${BACKEND_URL}/api/auth/callback`,
-          { access_token },
+          { code },
           {
             withCredentials: true,
             headers: { "Content-Type": "application/json" },
           }
         );
 
+        // Store token
         localStorage.setItem("token", response.data.token);
         await setAuthState(response.data.token);
+
+        // ✅ Remove code from URL
+        const newUrl = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, newUrl);
+
         router.push("/dashboard");
       } catch (err: unknown) {
+        console.error("Google login failed:", err);
+
         if (typeof err === "object" && err !== null && "response" in err) {
-          const errorResponse = (
-            err as { response?: { status?: number; data?: unknown } }
-          ).response;
+          const errorResponse = (err as { response?: { status?: number; data?: unknown } }).response;
 
           if (errorResponse?.status === 404) {
-            const data = errorResponse.data as ErrorResponse;
-            if (data?.message === "Student not found") {
+            const data = errorResponse.data as ErrorResponse & { user?: { email: string; name: string; roll_no: string } };
+
+            if (data?.message === "Student not found" && data.user) {
               console.warn("Student not found, redirecting to register...");
-              const data = errorResponse.data as ErrorResponse & {
-                user?: unknown;
-              };
-              console.log(errorResponse);
-              // Construct query parameters
+
               const queryParams = new URLSearchParams({
                 showForm: "true",
-                email: (data.user as { email: string }).email,
-                name: (data.user as { name: string }).name,
-                roll_no: (data.user as { roll_no: string }).roll_no,
+                email: data.user.email,
+                name: data.user.name,
+                roll_no: data.user.roll_no,
               }).toString();
 
-              // Navigate to register page with query params
               router.push(`/register?${queryParams}`);
               return;
             }
           }
-
-          console.error(
-            "Google login failed:",
-            errorResponse?.data || "Unknown error"
-          );
-        } else {
-          console.error("An unknown error occurred.", err);
         }
+
         router.push("/login");
       }
     };
 
-    const accessToken = extractTokenFromHash();
-    if (accessToken) {
-      exchangeTokenForSession(accessToken);
+    const authCode = extractAuthCode();
+    if (authCode) {
+      exchangeCodeForToken(authCode);
     } else {
-      console.error("Required tokens not found in URL");
+      console.error("Authorization code not found in URL");
       router.push("/login");
     }
-  }, [router, setAuthState]);
+  }, [router, setAuthState, processing]);
 
   return <h2>Processing login...</h2>;
 };
