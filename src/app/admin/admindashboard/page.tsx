@@ -264,6 +264,7 @@ const AdminDashboard = () => {
       <table className="w-full border-collapse border border-black mt-11">
         <thead>
           <tr className="bg-[#CCD6E0FC] text-black">
+            <th className="border border-black p-2">Sno</th>
             <th className="border border-black p-2">Roll No</th>
             <th className="border border-black p-2">Name</th>
             <th className="border border-black p-2">Email</th>
@@ -277,6 +278,7 @@ const AdminDashboard = () => {
             generalRegistrations.length > 0 ? (
               generalRegistrations.map((registration) => (
                 <tr key={registration.roll_no} className="text-center">
+                  <td className="border p-2">{registration.sno}</td>
                   <td className="border p-2">{registration.roll_no}</td>
                   <td className="border p-2">{registration.name}</td>
                   <td className="border p-2">{registration.email}</td>
@@ -293,11 +295,12 @@ const AdminDashboard = () => {
               </tr>
             )
           ) : students.length > 0 ? (
-            students.map((student) => (
+            students.map((student,index) => (
               <tr
                 key={`${student.roll_no}_${student.event}`}
                 className="text-center"
               >
+                <td className="border p-2">{index+1}</td>
                 <td className="border p-2">{student.roll_no}</td>
                 <td className="border p-2">{student.student.name}</td>
                 <td className="border p-2">{student.student.email}</td>
