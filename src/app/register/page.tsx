@@ -29,7 +29,7 @@ export default function RegisterPage() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if(token){
-      router.push("/dashboard");
+      router.push("/");
     }
 
     const storedName =
