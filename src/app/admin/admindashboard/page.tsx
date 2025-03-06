@@ -1,5 +1,5 @@
 "use client";
-const url = "https://infinitumdb.psgtech.ac.in";
+const url = "https://infinitum-website.onrender.com";
 console.log(url);
 
 import { useEffect, useState } from "react";
