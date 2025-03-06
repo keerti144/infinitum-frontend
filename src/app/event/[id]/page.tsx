@@ -73,7 +73,7 @@ const events = [
     date: "March 7, 2025",
     time: "9:30 AM - 12:00 PM",
     location: "AIR Lab / Programming 1 Lab",
-    teamSize: "2-3 members",
+    teamSize: "2-4 members",
     prizes: ["Winner : ₹2500", "Runner : ₹1500"],
     prerequisites: ["None"],
     registrationDeadline: "March 4, 2025",
