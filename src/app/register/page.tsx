@@ -28,7 +28,9 @@ export default function RegisterPage() {
   const [message, setMessage] = useState("");
   useEffect(() => {
     const token = localStorage.getItem("token");
-    
+    if(token){
+      router.push("/dashboard");
+    }
 
     const storedName =
       searchParams.get("name") || localStorage.getItem("name") || "";

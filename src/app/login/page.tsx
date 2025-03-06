@@ -2,13 +2,10 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/lib/AuthContext"; // Import useAuth
 import "@/app/login/animations.css";
 import { Navbar } from "../components/navbar";
-import { BACKEND_URL } from "../../../production.config";
 
 export default function LoginPage() {
-  const { setAuthState } = useAuth(); // Access setAuthState from context
 
   const handleGoogleLogin  = async () => {
     try {
@@ -67,7 +64,7 @@ export default function LoginPage() {
 
         {/* Register Link */}
         <p className="text-gray-400 text-center mt-4 text-sm md:text-base">
-          Haven't registered yet?{" "}
+          Haven&apos;t registered yet?{" "}
           <Link href="/register" className="text-pink-500 hover:underline">
             Register here
           </Link>
