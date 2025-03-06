@@ -247,6 +247,9 @@ const AdminDashboard = () => {
             <option key="3" value="3">
               Quiz roulette
             </option>
+            <option key="6" value="general">
+              General Registration
+            </option>
           </select>
         </div>
 
