@@ -300,8 +300,7 @@ export default function EventPage() {
             <div className="flex gap-4">
               <Button
                 onClick={() => setShowConfirmation(false)}
-                variant="outline"
-                className="w-full"
+                asChild variant="secondary"
               >
                 Back
               </Button>
