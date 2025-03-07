@@ -1,6 +1,6 @@
 "use client";
-const url = "https://infinitum-website.onrender.com";
-console.log(url);
+const url = "https://infinitum-backup.onrender.com";
+
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -42,6 +42,7 @@ const AdminDashboard = () => {
   const [generalRegistrations, setGeneralRegistrations] = useState<GeneralRegistration[]>([]);
   const [attendance, setAttendance] = useState<AttendanceResponse>({});
   const [token, setToken] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
   // const [error, setError] = useState<string>("");
 
   useEffect(() => {
@@ -190,7 +191,7 @@ const AdminDashboard = () => {
       console.log("Sending data:", { roll_no: rollNo, event_id: eventId });
       const response = await axios.post(
         `${url}/api/attendance/putattendance`,
-        { roll_no: rollNo, event_id: eventId },
+        { roll_no: rollNo, event_id: eventId,attendance:1 },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       console.log("API Response:", response.data);
@@ -208,6 +209,27 @@ const AdminDashboard = () => {
       setStudents([]);
     }
   };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value.toLowerCase());
+  };
+
+  const filteredStudents = searchQuery
+  ? students.filter(
+      (s) =>
+        s.roll_no.toLowerCase().includes(searchQuery) ||
+        s.student.name.toLowerCase().includes(searchQuery)
+    )
+  : students;
+
+const filteredGeneralRegistrations = searchQuery
+  ? generalRegistrations.filter(
+      (s) =>
+        s.roll_no.toLowerCase().includes(searchQuery) ||
+        s.name.toLowerCase().includes(searchQuery)
+    )
+  : generalRegistrations;
+
   // const formattedStudents = students.map((s) => ({
   //   roll_no: s.roll_no,
   //   name: s.student?.name || "N/A",
@@ -258,8 +280,9 @@ const AdminDashboard = () => {
           <input
             type="text"
             placeholder="Enter Roll No or Name"
-            className="border p-2 text-gray-800 bg-[#CCD6E0FC] rounded placeholder-gray-500"
-            // onChange={(e) => fetchStudentEvents(e.target.value)}
+            className="border p-2 text-gray-800 bg-[#CCD6E0FC] rounded"
+            value={searchQuery}
+            onChange={handleSearchChange}
           />
         </div>
       </div>
@@ -276,47 +299,46 @@ const AdminDashboard = () => {
           </tr>
         </thead>
         <tbody>
-          {selectedEvent === "general" ? (
-            generalRegistrations.length > 0 ? (
-              generalRegistrations.map((registration) => (
-                <tr key={registration.roll_no} className="text-center">
-                  <td className="border p-2">{registration.roll_no}</td>
-                  <td className="border p-2">{registration.name}</td>
-                  <td className="border p-2">{registration.email}</td>
-                  <td className="border p-2">{registration.phn_no}</td>
-                  <td className="border p-2">General Registration</td>
-                  
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={6} className="border p-2 text-center">
-                  No registrations found
-                </td>
+        {selectedEvent === "general" ? (
+          filteredGeneralRegistrations.length > 0 ? (
+            filteredGeneralRegistrations.map((registration) => (
+              <tr key={registration.roll_no} className="text-center">
+                <td className="border p-2">{registration.roll_no}</td>
+                <td className="border p-2">{registration.name}</td>
+                <td className="border p-2">{registration.email}</td>
+                <td className="border p-2">{registration.phn_no}</td>
+                <td className="border p-2">General Registration</td>
               </tr>
-            )
-          ) : students.length > 0 ? (
-            students.map((student) => (
-              <tr
-                key={`${student.roll_no}_${student.event}`}
-                className="text-center"
-              >
-                <td className="border p-2">{student.roll_no}</td>
-                <td className="border p-2">{student.student.name}</td>
-                <td className="border p-2">{student.student.email}</td>
-                <td className="border p-2">{student.student.phn_no}</td>
-                <td className="border p-2">{student.event}</td>
-                <td className="border p-2">
-                  <input
-                    type="checkbox"
-                    className="w-5 h-5 border-2 border-white bg-white checked:bg-black checked:border-black rounded transition-all"
-                    checked={attendance[student.roll_no] || false}
-                    onChange={() =>
-                      handleAttendanceChange(student.roll_no, student.event)
-                    }
-                  />
-                </td>
-              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={6} className="border p-2 text-center">
+                No registrations found
+              </td>
+            </tr>
+          )
+        ) : filteredStudents.length > 0 ? (
+          filteredStudents.map((student) => (
+            <tr
+              key={`${student.roll_no}_${student.event}`}
+              className="text-center"
+            >
+              <td className="border p-2">{student.roll_no}</td>
+              <td className="border p-2">{student.student.name}</td>
+              <td className="border p-2">{student.student.email}</td>
+              <td className="border p-2">{student.student.phn_no}</td>
+              <td className="border p-2">{student.event}</td>
+              <td className="border p-2">
+                <input
+                  type="checkbox"
+                  className="w-5 h-5 border-2 border-white bg-white checked:bg-black checked:border-black rounded transition-all"
+                  checked={attendance[student.roll_no] || false}
+                  onChange={() =>
+                    handleAttendanceChange(student.roll_no, student.event)
+                  }
+                />
+              </td>
+            </tr>
             ))
           ) : (
             <tr>
