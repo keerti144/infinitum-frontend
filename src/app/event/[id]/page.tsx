@@ -170,7 +170,7 @@ export default function EventPage() {
       if (!token) return;
       
       const response = await axios.post(
-        `https://infinitumdb.psgtech.ac.in/api/event/register`,
+        `https://infinitum-website.onrender.com/api/event/register`,
         { event_id: id },
         {
           headers: {
@@ -300,7 +300,8 @@ export default function EventPage() {
             <div className="flex gap-4">
               <Button
                 onClick={() => setShowConfirmation(false)}
-                asChild variant="secondary"
+                variant="outline"
+                className="w-full"
               >
                 Back
               </Button>

@@ -34,7 +34,7 @@ export default function ProfileSidebar({
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const response: any = await axios.get(
-          "https://infinitumdb.psgtech.ac.in/api/student/registeredEvents",
+          "https://infinitum-website.onrender.com/api/student/registeredEvents",
           {
             headers: {
               Authorization: `Bearer ${token}`,

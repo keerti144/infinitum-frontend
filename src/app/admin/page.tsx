@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { BACKEND_URL } from "../../../production.config.js";
 interface LoginResponse {
   token: string;
 }
+const url = "https://infinitum-backup.onrender.com";
 const AdminLogin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -18,7 +18,7 @@ const AdminLogin = () => {
 
     try {
       const response = await axios.post<LoginResponse>(
-        `${BACKEND_URL}/api/auth/admin/login`,
+        `${url}/api/auth/admin/login`,
         {
           username,
           password,

@@ -42,7 +42,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (!storedToken) return;
 
       const response = await axios.get(
-        "https://infinitumdb.psgtech.ac.in/api/student/profile/",
+        "https://infinitum-website.onrender.com/api/student/profile/",
         {
           headers: {
             Authorization: `Bearer ${storedToken}`,
@@ -58,7 +58,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     try {
-      await axios.post("https://infinitumdb.psgtech.ac.in/api/auth/logout");
+      await axios.post("https://infinitum-website.onrender.com/api/auth/logout");
       localStorage.removeItem("token");
       setToken(null);
       setIsAuthenticated(false);
